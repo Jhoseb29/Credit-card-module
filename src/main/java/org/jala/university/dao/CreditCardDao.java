@@ -1,7 +1,7 @@
 package org.jala.university.dao;
 
 import jakarta.persistence.EntityManager;
-import org.jala.university.CreditCardForm;
+import org.jala.university.model.CreditCardForm;
 
 import java.util.UUID;
 

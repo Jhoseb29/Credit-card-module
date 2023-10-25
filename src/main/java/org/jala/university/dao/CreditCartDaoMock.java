@@ -1,5 +1,5 @@
 package org.jala.university.dao;
-import org.jala.university.CreditCardForm;
+import org.jala.university.model.CreditCardForm;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

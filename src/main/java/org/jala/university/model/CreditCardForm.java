@@ -1,4 +1,4 @@
-package org.jala.university;
+package org.jala.university.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

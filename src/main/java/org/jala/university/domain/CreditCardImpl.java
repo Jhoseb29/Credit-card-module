@@ -1,6 +1,6 @@
 package org.jala.university.domain;
 
-import org.jala.university.CreditCardForm;
+import org.jala.university.model.CreditCardForm;
 import org.jala.university.dao.CreditCardDao;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package org.jala.university.presentation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.jala.university.CreditCardForm;
+import org.jala.university.model.CreditCardForm;
 import org.jala.university.domain.CreditCardModule;
 
 import javax.swing.*;
