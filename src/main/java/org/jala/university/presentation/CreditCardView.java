@@ -1,155 +1,115 @@
 package org.jala.university.presentation;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.EntityTransaction;
 import org.jala.university.model.CreditCardForm;
 import org.jala.university.domain.CreditCardModule;
 import org.jala.university.validations.Validator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CreditCardView extends JFrame {
-    /*private final CreditCardModule creditCardModule;
-    private CreditCardModule creditCardModule1;
-    private JPanel topPanel;
-    private JPanel btnPanel;
-    private JScrollPane scrollPane;
-
-
-    public CreditCardView(CreditCardModule creditCardModule) {
-        this.creditCardModule = creditCardModule;
-        setTitle("credit Card Form");
-        setSize(500, 500);
-        setBackground(Color.gray);
-        setLocationRelativeTo(null);
-    }*/
     private final CreditCardModule creditCardModule;
-
-    private JTextField addressField;
-    private JTextField phoneNumberField;
-    private JTextField incomeField;
-    private JTextField birthdateField;
-    private JTextField emailField;
-
-    public CreditCardView(CreditCardModule creditCardModule) {
+    private final JPanel topPanel;
+    private final JPanel btnPanel;
+    private final EntityManager entityManager;
+    Map<String, JTextField> inputFields = new HashMap<>();
+    public CreditCardView(CreditCardModule creditCardModule, EntityManager entityManager) {
         this.creditCardModule = creditCardModule;
-
+        this.entityManager = entityManager;
         setTitle("Credit Card Form");
         setSize(400, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        String[] labels = {"Address", "Cellphone", "Income", "Birthdate (dd/mm/aaaa)", "Email", "Application Date (dd/mm/aaaa)"};
+        int numPairs = labels.length;
+        topPanel = new JPanel(new SpringLayout());
+        btnPanel = new JPanel();
+        add(topPanel, BorderLayout.CENTER);
+        add(btnPanel, BorderLayout.SOUTH);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 2));
-
-        addressField = new JTextField();
-        phoneNumberField = new JTextField();
-        incomeField = new JTextField();
-        birthdateField = new JTextField();
-        emailField = new JTextField();
+        for (String labelName : labels){
+            JLabel label = new JLabel(labelName + " : " , JLabel.TRAILING);
+            topPanel.add(label);
+            JTextField jTextField =  new JTextField(15);
+            label.setLabelFor(jTextField);
+            inputFields.put(labelName, jTextField);
+            topPanel.add(jTextField);
+        }
+        SpringUtilities.makeCompactGrid(topPanel, numPairs, 2,6,6,6,6);
         JButton submitButton = new JButton("SEND REQUEST");
+        btnPanel.add(submitButton);
+        submitButton.addActionListener(event -> {
+            String address = inputFields.get("Address").getText();
+            String phoneNumber = inputFields.get("Cellphone").getText();
+            double income = Double.parseDouble(inputFields.get("Income").getText());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date applicationDate = new Date();
+            String email = inputFields.get("Email").getText();
+            Date birthdate = null;
 
-        panel.add(new JLabel("Address:"));
-        panel.add(addressField);
-        panel.add(new JLabel("Cellphone:"));
-        panel.add(phoneNumberField);
-        panel.add(new JLabel("Income:"));
-        panel.add(incomeField);
-        panel.add(new JLabel("Birthdate (dd/mm/aaaa):"));
-        panel.add(birthdateField);
-        panel.add(new JLabel("Email:"));
-        panel.add(emailField);
+            //Validators
+            try {
+                birthdate = dateFormat.parse(inputFields.get("Birthdate (dd/mm/aaaa)").getText());
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(CreditCardView.this,
+                        "Error al procesar la fecha de nacimiento.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
 
-        panel.add(new JLabel(""));
-
-        panel.add(submitButton);
-
-        add(panel, BorderLayout.CENTER);
-
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtener los valores de los campos de entrada
-                String address = addressField.getText();
-                String phoneNumber = phoneNumberField.getText();
-                String incomeText = incomeField.getText();
-                String birthdateText = birthdateField.getText();
-                String email = emailField.getText();
-
-                // Realizar validaciones
-                if (!Validator.isValidEmail(email)) {
-                    JOptionPane.showMessageDialog(CreditCardView.this, "Correo electrónico no válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                double income;
-                try {
-                    income = Double.parseDouble(incomeText);
-                    if (!Validator.isValidIncome(income)) {
-                        JOptionPane.showMessageDialog(CreditCardView.this, "Los ingresos no pueden ser negativos.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(CreditCardView.this, "Ingrese un valor válido para ingresos.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (!Validator.isValidPhoneNumber(phoneNumber)) {
-                    JOptionPane.showMessageDialog(CreditCardView.this, "Número de teléfono no válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (!Validator.isValidBirthdate(birthdateText)) {
-                    JOptionPane.showMessageDialog(CreditCardView.this, "Fecha de nacimiento no válida.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date birthdate;
-                try {
-                    birthdate = dateFormat.parse(birthdateText);
-                } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(CreditCardView.this, "Error al procesar la fecha de nacimiento.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-
-                CreditCardForm newCreditCard = new CreditCardForm();
-                newCreditCard.setAddress(address);
-                newCreditCard.setPhoneNumber(phoneNumber);
-                newCreditCard.setIncome(income);
-                newCreditCard.setBirthdate(birthdate);
-                newCreditCard.setEmail(email);
-
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("CardModule");
-                EntityManager em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(newCreditCard);
-                em.getTransaction().commit();
-                em.close();
-                emf.close();
-
-                System.out.println("Éxito: Los datos se han guardado en la base de datos.");
-                clearFormFields();
             }
+
+            if (!Validator.isValidEmail(email)) {
+                JOptionPane.showMessageDialog(CreditCardView.this,
+                        "Correo electrónico no válido.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!Validator.isValidPhoneNumber(phoneNumber)) {
+                JOptionPane.showMessageDialog(CreditCardView.this,
+                        "Número de teléfono no válido.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            try {
+                if (!Validator.isValidIncome(income)) {
+                    JOptionPane.showMessageDialog(CreditCardView.this,
+                            "Los ingresos no pueden ser negativos.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(CreditCardView.this,
+                        "Ingrese un valor válido para ingresos.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            CreditCardForm creditCardForm = CreditCardForm.builder()
+                    .address(address)
+                    .phoneNumber(phoneNumber)
+                    .income(income)
+                    .birthdate(birthdate)
+                    .email(email)
+                    .aplicationDate(applicationDate)
+                    .build();
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            creditCardModule.create(creditCardForm);
+            transaction.commit();
+            creditCardModule.create(creditCardForm);
+            clearFormFields();
         });
     }
-
     private void clearFormFields() {
-        addressField.setText("");
-        phoneNumberField.setText("");
-        incomeField.setText("");
-        birthdateField.setText("");
-        emailField.setText("");
+        for (JTextField textField : inputFields.values()) {
+            textField.setText("");
+        }
     }
-
-
 
 }

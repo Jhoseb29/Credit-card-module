@@ -24,7 +24,7 @@ public class main {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
 
-            CreditCardView creditCardFormUI = new CreditCardView(creditCardModule);
+            CreditCardView creditCardFormUI = new CreditCardView(creditCardModule, entityManager);
             creditCardFormUI.setVisible(true);
 
             transaction.commit();

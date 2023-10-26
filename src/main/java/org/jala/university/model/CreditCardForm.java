@@ -1,6 +1,7 @@
 package org.jala.university.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.jala.university.dao.EntityDAO;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
 public class CreditCardForm implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,6 +26,8 @@ public class CreditCardForm implements EntityDAO<UUID> {
     private Date birthdate;
     @Column
     private String email;
+    @Column
+    private Date aplicationDate;
 
 
 }
