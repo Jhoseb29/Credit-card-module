@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.jala.university.model.CreditCardForm;
 import org.jala.university.domain.CreditCardModule;
+import org.jala.university.validations.Dialog;
 import org.jala.university.validations.Validator;
 
 import javax.swing.*;
@@ -62,48 +63,33 @@ public class CreditCardView extends JFrame {
       try {
         birthdate = dateFormat.parse(inputFields.get("Birthdate (dd/mm/aaaa)").getText());
       } catch (ParseException ex) {
-        JOptionPane.showMessageDialog(CreditCardView.this,
-            "Error al procesar la fecha de nacimiento.", "Error",
-            JOptionPane.ERROR_MESSAGE);
+        Dialog.error("Error al procesar la fecha de nacimiento.");
 
       }
 
       if (!Validator.isValidBirthdate(inputFields.get("Birthdate (dd/mm/aaaa)").getText())) {
-        JOptionPane.showMessageDialog(CreditCardView.this,
-            "La persona debe tener al menos 18 años.", "Error",
-            JOptionPane.ERROR_MESSAGE);
+        Dialog.error("La persona debe tener al menos 18 años.");
         return;
       }
 
       if (!Validator.isValidEmail(email)) {
-        JOptionPane.showMessageDialog(CreditCardView.this,
-            "Correo electrónico no válido.", "Error",
-            JOptionPane.ERROR_MESSAGE);
+        Dialog.error("Correo electrónico no válido.");
         return;
       }
       if (!Validator.isValidPhoneNumber(phoneNumber)) {
-        JOptionPane.showMessageDialog(CreditCardView.this,
-            "Número de teléfono no válido.", "Error",
-            JOptionPane.ERROR_MESSAGE);
+        Dialog.error("Número de teléfono no válido.");
         return;
       }
       try {
         if (!Validator.isValidIncome(income)) {
-          JOptionPane.showMessageDialog(CreditCardView.this,
-              "Los ingresos no pueden ser negativos.", "Error",
-              JOptionPane.ERROR_MESSAGE);
+          Dialog.error("Los ingresos no pueden ser negativos.");
           return;
         }
       } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(CreditCardView.this,
-            "Ingrese un valor válido para ingresos.", "Error",
-            JOptionPane.ERROR_MESSAGE);
+        Dialog.error("Ingrese un valor válido para ingresos.");
         return;
       }
-
-      JOptionPane.showMessageDialog(CreditCardView.this,
-          "Formulario aceptado. ¡Gracias por enviar su solicitud!",
-          "Éxito", JOptionPane.INFORMATION_MESSAGE);
+      Dialog.getInformation("Formulario aceptado. ¡Gracias por enviar su solicitud!");
 
       CreditCardForm creditCardForm = CreditCardForm.builder()
           .address(address)
