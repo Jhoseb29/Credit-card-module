@@ -12,22 +12,22 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class CreditCardForm implements EntityDAO<UUID> {
+public class    CreditCardForm implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "idCreditCardForm",nullable = false)
     private UUID id;
-    @Column
+    @Column(nullable = false)
     private String address;
-    @Column
+    @Column(nullable = false)
     private String phoneNumber;
-    @Column
+    @Column(nullable = false)
     private double income;
-    @Column
+    @Column(nullable = false)
     private Date birthdate;
-    @Column
+    @Column(nullable = false)
     private String email;
-    @Column
+    @Column(nullable = false)
     private Date aplicationDate;
-
 
 }

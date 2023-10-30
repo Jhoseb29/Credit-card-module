@@ -29,10 +29,10 @@ public class CreditCardView extends JFrame {
     this.entityManager = entityManager;
     setTitle("Credit Card Form");
     setSize(400, 300);
+    setResizable(false);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    String[] labels = {"Address", "Cellphone", "Income", "Birthdate (dd/mm/aaaa)", "Email",
-        "Application Date (dd/mm/aaaa)"};
+    String[] labels = {"Address", "Cellphone", "Income", "Birthdate (dd/mm/aaaa)", "Email"};
     int numPairs = labels.length;
     topPanel = new JPanel(new SpringLayout());
     btnPanel = new JPanel();
