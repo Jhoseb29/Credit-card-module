@@ -22,6 +22,7 @@ public class CreditCardView extends JFrame {
   private final JPanel topPanel;
   private final JPanel btnPanel;
   private final EntityManager entityManager;
+  private JFrame frameCardView = new JFrame();
   Map<String, JTextField> inputFields = new HashMap<>();
 
   public CreditCardView(CreditCardModule creditCardModule, EntityManager entityManager) {
@@ -105,6 +106,7 @@ public class CreditCardView extends JFrame {
       transaction.commit();
       creditCardModule.create(creditCardForm);
       clearFormFields();
+      closeCurrentFrame();
     });
   }
 
@@ -112,5 +114,13 @@ public class CreditCardView extends JFrame {
     for (JTextField textField : inputFields.values()) {
       textField.setText("");
     }
+  }
+  public void closeCurrentFrame(){
+    setVisible(false);
+    frameCardView.setEnabled(true);
+    frameCardView.setVisible(true);
+  }
+  public void setFrameCardView(JFrame frame){
+    frameCardView = frame;
   }
 }

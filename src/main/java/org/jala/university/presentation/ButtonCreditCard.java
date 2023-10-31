@@ -17,8 +17,9 @@ public class ButtonCreditCard extends JFrame {
         panel.add(creditCardButton);
 
         creditCardButton.addActionListener(e -> {
-            // Aquí puedes agregar la lógica para lo que deseas hacer cuando se haga clic en el botón.
-            // Por ejemplo, puedes abrir el formulario de tarjeta de crédito o realizar alguna otra acción.
+            CardView cardView = new CardView();  // Muestra la vista de la tarjeta
+            cardView.setVisible(true);
+            setVisible(false);
         });
     }
 }
