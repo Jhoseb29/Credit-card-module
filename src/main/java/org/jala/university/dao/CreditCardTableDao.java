@@ -36,6 +36,15 @@ public class CreditCardTableDao extends AbstractDAO<CreditCardTable, UUID> {
         }
         return "Account not found";
     }
+    @Transactional
+    public boolean isBalanceZero(UUID id) {
+        CreditCardTable creditCard = findOne(id);
+        if (creditCard != null) {
+            return creditCard.getCurrent_limit() == 0.0f;
+        }
+        return false;
+    }
+
 
 
 }

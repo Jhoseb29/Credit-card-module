@@ -60,18 +60,26 @@ public class CreditCardView extends JFrame {
     submitButton.addActionListener(event -> {
       String address = inputFields.get("Address").getText();
       String phoneNumber = inputFields.get("Cellphone").getText();
-      double income = Double.parseDouble(inputFields.get("Income").getText());
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-      Date applicationDate = new Date();
+      String incomeText = inputFields.get("Income").getText();
+      String birthdateText = inputFields.get("Birthdate (dd/mm/aaaa)").getText();
       String email = inputFields.get("Email").getText();
-      Date birthdate = null;
+
+      // Verifica si algún campo está vacío
+      if (address.isEmpty() || phoneNumber.isEmpty() || incomeText.isEmpty() || birthdateText.isEmpty() || email.isEmpty()) {
+        Dialog.error("Por favor, complete todos los campos.");
+        return;
+      }
 
       //Validators
+      double income;
+      Date birthdate;
       try {
-        birthdate = dateFormat.parse(inputFields.get("Birthdate (dd/mm/aaaa)").getText());
-      } catch (ParseException ex) {
-        Dialog.error("Error al procesar la fecha de nacimiento.");
-
+        income = Double.parseDouble(incomeText);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        birthdate = dateFormat.parse(birthdateText);
+      } catch (ParseException | NumberFormatException ex) {
+        Dialog.error("Por favor, ingrese datos válidos.");
+        return;
       }
 
       if (!Validator.isValidBirthdate(inputFields.get("Birthdate (dd/mm/aaaa)").getText())) {
@@ -104,7 +112,7 @@ public class CreditCardView extends JFrame {
           .income(income)
           .birthdate(birthdate)
           .email(email)
-          .aplicationDate(applicationDate)
+          .aplicationDate(new Date())
           .build();
       EntityTransaction transaction = entityManager.getTransaction();
       transaction.begin();
