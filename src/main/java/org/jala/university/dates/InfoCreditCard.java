@@ -34,6 +34,8 @@ public class InfoCreditCard {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
         String expirationDate = dateFormat.format(calendar.getTime());
         boolean approved = income > 3000 ;
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
 
         CreditCardTable creditCardTable = CreditCardTable.builder()
                 .current_limit(0.0f)
@@ -43,7 +45,6 @@ public class InfoCreditCard {
                 .expiration_year(expirationYear)
                 .approved_card(approved)
                 .build();
-
         creditCardTableModule.create(creditCardTable);
         return creditCardTable.getId();
     }

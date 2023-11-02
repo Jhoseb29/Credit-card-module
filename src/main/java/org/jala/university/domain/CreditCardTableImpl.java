@@ -53,5 +53,10 @@ public class CreditCardTableImpl implements CreditCardTableModule {
         return creditCardDao.getAccountStatus(id);
     }
 
+    @Override
+    public String getExpirationDate(UUID id) {
+       return creditCardDao.getExpirationDate(id);
+    }
+
 
 }

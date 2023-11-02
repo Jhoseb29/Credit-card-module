@@ -13,4 +13,5 @@ public interface CreditCardTableModule {
     float getCurrentLimit(UUID id);
     float getCredit_limit(UUID id, double income);
     String getAccountStatus(UUID id);
+    String getExpirationDate(UUID id);
 }

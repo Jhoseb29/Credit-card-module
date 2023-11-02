@@ -2,6 +2,7 @@ package org.jala.university.presentation;
 
 import org.jala.university.domain.CreditCardTableModule;
 import org.jala.university.model.CreditCardForm;
+import org.jala.university.validations.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,56 +12,62 @@ import java.util.UUID;
 
 public class InformationCreditCardView {
     private JFrame frame;
-    private CreditCardTableModule creditCardModule;
-    private UUID cardId;
-    private CreditCardForm creditCardForm = CreditCardForm.builder().build();
+    private final CreditCardTableModule creditCardModule;
+    private final UUID cardId;
+    private final CreditCardForm creditCardForm = CreditCardForm.builder().build();
 
     public InformationCreditCardView(CreditCardTableModule creditCardModule, UUID cardId) {
         this.creditCardModule = creditCardModule;
         this.cardId = cardId;
 
-        frame = new JFrame("Tarjeta de Crédito");
+        frame = new JFrame("Credit Card");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 150);
         frame.setLayout(new FlowLayout());
 
-        JButton btnEstado = new JButton("Ver Estado");
-        JButton btnSaldo = new JButton("Ver Saldo");
-        JButton btnLimiteSaldo = new JButton("Ver Límite de Saldo");
-        JButton btnFechaVencimiento = new JButton("Ver Fecha de Vencimiento");
+        JButton btnStatus = new JButton("See Status");
+        JButton btnBalance = new JButton("See Balance");
+        JButton btnBalanceLimit = new JButton("See Balance Limit");
+        JButton btnExpirationDate = new JButton("See Expiration Date");
 
-        frame.add(btnEstado);
-        frame.add(btnSaldo);
-        frame.add(btnLimiteSaldo);
-        frame.add(btnFechaVencimiento);
+        frame.add(btnStatus);
+        frame.add(btnBalance);
+        frame.add(btnBalanceLimit);
+        frame.add(btnExpirationDate);
 
-        btnEstado.addActionListener(new ActionListener() {
+
+        btnStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String estado = creditCardModule.getAccountStatus(cardId);
-                JOptionPane.showMessageDialog(null, "Estado: " + estado);
+                String status = creditCardModule.getAccountStatus(cardId);
+                Dialog.getInformation("Status:" + status);
             }
         });
 
-        btnSaldo.addActionListener(new ActionListener() {
+        btnBalance.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float saldo = creditCardModule.getCurrentLimit(cardId);
-                JOptionPane.showMessageDialog(null, "Saldo: " + saldo);
+                float balance = creditCardModule.getCurrentLimit(cardId);
+               Dialog.getInformation("Balance: " + balance);
             }
         });
 
-        btnLimiteSaldo.addActionListener(new ActionListener() {
+        btnBalanceLimit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float limite = creditCardModule.getCredit_limit(cardId, creditCardForm.getIncome());
-                JOptionPane.showMessageDialog(null, "Límite de Saldo: " + limite);
+                float creditLimit = creditCardModule.getCredit_limit(cardId, creditCardForm.getIncome());
+                Dialog.getInformation("Credit Limit: " + creditLimit);
             }
         });
 
-        btnFechaVencimiento.addActionListener(new ActionListener() {
+        btnExpirationDate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Lógica para mostrar la fecha de vencimiento
-
+                String expirationDate = creditCardModule.getExpirationDate(cardId);
+                if (!expirationDate.equals("Expiration date not available")) {
+                    Dialog.getInformation("Expiration Date: " + expirationDate);
+                } else {
+                    Dialog.getInformation("Expiration date not available");
+                }
             }
         });
+
 
         frame.setVisible(true);
     }
