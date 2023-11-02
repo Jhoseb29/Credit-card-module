@@ -4,6 +4,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.jala.university.model.CreditCardTable;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class CreditCardTableDao extends AbstractDAO<CreditCardTable, UUID> {
@@ -35,6 +38,21 @@ public class CreditCardTableDao extends AbstractDAO<CreditCardTable, UUID> {
             return (status == 1) ? "active" : "blocked up";
         }
         return "Account not found";
+    }
+    @Transactional
+    public String getExpirationDate(UUID id) {
+        CreditCardTable creditCard = findOne(id);
+        if (creditCard != null) {
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = new Date();
+            calendar.setTime(currentDate);
+            calendar.add(Calendar.YEAR, 4);
+            int expirationMonth = calendar.get(Calendar.MONTH) + 1;
+            int expirationYear = calendar.get(Calendar.YEAR);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
+            return dateFormat.format(calendar.getTime());
+        }
+        return "Expiration date not available";
     }
 
 
