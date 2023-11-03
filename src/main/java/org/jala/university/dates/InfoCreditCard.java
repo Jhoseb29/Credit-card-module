@@ -14,10 +14,12 @@ import java.util.UUID;
 public class InfoCreditCard {
     private  final CreditCardTableModule creditCardTableModule;
     private final EntityManager entityManager;
+    private final CreditCardForm creditCardForm;
 
-    public InfoCreditCard(CreditCardTableModule creditCardTableModule,  EntityManager entityManager1) {
+    public InfoCreditCard(CreditCardTableModule creditCardTableModule,  EntityManager entityManager1, CreditCardForm creditCardForm) {
         this.creditCardTableModule = creditCardTableModule;
         this.entityManager = entityManager1;
+        this.creditCardForm = creditCardForm;
 
     }
 
@@ -38,14 +40,16 @@ public class InfoCreditCard {
         transaction.begin();
 
         CreditCardTable creditCardTable = CreditCardTable.builder()
-                .current_limit(0.0f)
-                .creditCardForm(creditCardForm)
+                //.creditCardForm(creditCardForm)
                 .credit_limit(creditLimit)
                 .expiration_month(expirationMonth)
                 .expiration_year(expirationYear)
                 .approved_card(approved)
+                .NIP(1234)
+                .status(1)
                 .build();
         creditCardTableModule.create(creditCardTable);
+        transaction.commit();
         return creditCardTable.getId();
     }
 

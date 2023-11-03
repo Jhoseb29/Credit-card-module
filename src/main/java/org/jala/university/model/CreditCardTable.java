@@ -17,12 +17,12 @@ import java.util.UUID;
 public class CreditCardTable implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "idCreditCard")
+    @Column(name = "id_credit_card")
     private UUID id;
     @Column
     private boolean approved_card;
     @Column
-    private float credit_limit;
+    private double credit_limit;
     @Column
     private float current_limit;
     @Column
@@ -37,8 +37,7 @@ public class CreditCardTable implements EntityDAO<UUID> {
     private int status;
     @Column
     private int NIP;
-    @OneToOne
-    @JoinColumn(name = "idCreditCardForm")
+    @OneToOne(targetEntity = CreditCardForm.class,cascade = CascadeType.PERSIST)
     private CreditCardForm creditCardForm;
 
 
