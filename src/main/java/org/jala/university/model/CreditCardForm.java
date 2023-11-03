@@ -8,18 +8,18 @@ import org.jala.university.dao.EntityDAO;
 import org.springframework.data.annotation.CreatedDate;
 import java.util.Date;
 import java.util.UUID;
-@Entity
+@Entity(name = "form")
 @Getter
 @Setter
 @Builder
 public class    CreditCardForm implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "idCreditCardForm",nullable = false)
+    @Column(name = "id_form",nullable = false)
     private UUID id;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
+    @Column(nullable = false,name = "phone_number")
     private String phoneNumber;
     @Column(nullable = false)
     private double income;
@@ -29,5 +29,4 @@ public class    CreditCardForm implements EntityDAO<UUID> {
     private String email;
     @Column(nullable = false)
     private Date aplicationDate;
-
 }

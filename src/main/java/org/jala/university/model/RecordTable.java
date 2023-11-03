@@ -27,7 +27,7 @@ public class RecordTable implements EntityDAO<UUID> {
     private int PIN;
     @Column
     private int status;
-    @OneToOne
-    @JoinColumn(name = "idCreditCard")
-    private CreditCardTable creditCardTable;
+//    @OneToOne
+//    @JoinColumn(name = "idCreditCard")
+//    private CreditCardTable creditCardTable;
 }

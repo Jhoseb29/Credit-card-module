@@ -117,11 +117,11 @@ public class CreditCardView extends JFrame {
       transaction.begin();
       creditCardModule.create(creditCardForm);
       transaction.commit();
-      creditCardModule.create(creditCardForm);
+      //creditCardModule.create(creditCardForm);
       clearFormFields();
 
       CreditCardTableModule creditCardTableModule = new CreditCardTableImpl(new CreditCardTableDao(entityManager));
-      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager);
+      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
       UUID cardId = infoCreditCard.generateCreditCardData();
       SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId));
 
