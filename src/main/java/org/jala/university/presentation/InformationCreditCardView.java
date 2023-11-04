@@ -1,8 +1,8 @@
 package org.jala.university.presentation;
 
-import org.jala.university.domain.CreditCardTableModule;
-import org.jala.university.model.CreditCardForm;
-import org.jala.university.validations.Dialog;
+import org.jala.university.services.CreditCardTableModule;
+import org.jala.university.model.FormModel;
+import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +14,14 @@ public class InformationCreditCardView {
     private JFrame frame;
     private final CreditCardTableModule creditCardModule;
     private final UUID cardId;
-    private final CreditCardForm creditCardForm = CreditCardForm.builder().build();
+    private final FormModel creditCardForm = FormModel.builder().build();
 
     public InformationCreditCardView(CreditCardTableModule creditCardModule, UUID cardId) {
         this.creditCardModule = creditCardModule;
         this.cardId = cardId;
 
         frame = new JFrame("Credit Card");
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 150);
         frame.setLayout(new FlowLayout());

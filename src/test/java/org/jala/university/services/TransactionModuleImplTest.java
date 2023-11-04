@@ -1,4 +1,4 @@
-package org.jala.university.domain;
+package org.jala.university.services;
 
 import org.junit.jupiter.api.Test;
 

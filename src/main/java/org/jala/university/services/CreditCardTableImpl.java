@@ -1,7 +1,7 @@
-package org.jala.university.domain;
+package org.jala.university.services;
 
 import org.jala.university.dao.CreditCardTableDao;
-import org.jala.university.model.CreditCardTable;
+import org.jala.university.model.CreditCardModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,22 +14,22 @@ public class CreditCardTableImpl implements CreditCardTableModule {
     }
 
     @Override
-    public void create(CreditCardTable creditCard) {
+    public void create(CreditCardModel creditCard) {
         creditCardDao.create(creditCard);
 
     }
     @Override
-    public CreditCardTable get(UUID id) {
+    public CreditCardModel get(UUID id) {
         return creditCardDao.findOne(id);
     }
 
     @Override
-    public List<CreditCardTable> getAll() {
+    public List<CreditCardModel> getAll() {
         return creditCardDao.findAll();
     }
 
     @Override
-    public CreditCardTable update(CreditCardTable creditCard) {
+    public CreditCardModel update(CreditCardModel creditCard) {
         return creditCardDao.update(creditCard);
     }
 
@@ -40,7 +40,7 @@ public class CreditCardTableImpl implements CreditCardTableModule {
 
     @Override
     public float getCurrentLimit(UUID id) {
-        return creditCardDao.getCurrentLimit(id);
+        return (float) creditCardDao.getCurrentLimit(id);
     }
 
     @Override

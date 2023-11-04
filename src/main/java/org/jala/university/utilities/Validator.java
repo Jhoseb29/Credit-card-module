@@ -1,4 +1,4 @@
-package org.jala.university.validations;
+package org.jala.university.utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,14 +1,14 @@
-package org.jala.university.domain;
+package org.jala.university.services;
 
-import org.jala.university.model.CreditCardTable;
+import org.jala.university.model.CreditCardModel;
 import java.util.List;
 import java.util.UUID;
 
 public interface CreditCardTableModule {
-    void create(CreditCardTable creditCard);
-    CreditCardTable get(UUID id);
-    List<CreditCardTable> getAll();
-    CreditCardTable update(CreditCardTable creditCard);
+    void create(CreditCardModel creditCard);
+    CreditCardModel get(UUID id);
+    List<CreditCardModel> getAll();
+    CreditCardModel update(CreditCardModel creditCard);
     void delete(UUID id);
     float getCurrentLimit(UUID id);
     float getCredit_limit(UUID id, double income);

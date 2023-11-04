@@ -5,13 +5,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.jala.university.dao.CreditCardDao;
-import org.jala.university.dao.CreditCartDaoMock;
-import org.jala.university.domain.CreditCardImpl;
-import org.jala.university.domain.CreditCardModule;
-import org.jala.university.presentation.CreditCardView;
+import org.jala.university.services.CreditCardImpl;
+import org.jala.university.services.CreditCardModule;
+import org.jala.university.presentation.InterfazView;
 
 import javax.swing.*;
-import java.util.Date;
 
 public class main {
     public static void main(String[] args) {
@@ -20,12 +18,15 @@ public class main {
 
         CreditCardModule creditCardModule = new CreditCardImpl(new CreditCardDao(entityManager));
 
+
+
         SwingUtilities.invokeLater(() -> {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
 
-            CreditCardView creditCardFormUI = new CreditCardView(creditCardModule, entityManager);
-            creditCardFormUI.setVisible(true);
+//            CreditCardView creditCardFormUI = new CreditCardView(creditCardModule, entityManager);
+//            creditCardFormUI.setVisible(true);
+            InterfazView interfazUI = new InterfazView();
 
             transaction.commit();
         });

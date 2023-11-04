@@ -5,9 +5,9 @@
              version="2.2">
     <persistence-unit name="CardModule">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>org.jala.university.model.CreditCardForm</class>
-        <class>org.jala.university.model.CreditCardTable</class>
-        <class>org.jala.university.model.RecordTable</class>
+        <class>org.jala.university.model.FormModel</class>
+        <class>org.jala.university.model.CreditCardModel</class>
+        <class>org.jala.university.model.RecordModel</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CreditCardModule"/>
