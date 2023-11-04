@@ -1,39 +1,39 @@
 package org.jala.university.dao;
-import org.jala.university.model.CreditCardForm;
+import org.jala.university.model.FormModel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class CreditCartDaoMock extends CreditCardDao {
-    private final Map<UUID, CreditCardForm> cardFormMap = new HashMap<>();
+    private final Map<UUID, FormModel> cardFormMap = new HashMap<>();
     public CreditCartDaoMock() {
         super(null);
     }
     @Override
-    public CreditCardForm findOne(UUID ruleGroupId) {
+    public FormModel findOne(UUID ruleGroupId) {
         return cardFormMap.get(ruleGroupId);
     }
 
     @Override
-    public List<CreditCardForm> findAll() {
+    public List<FormModel> findAll() {
         return cardFormMap.values().stream().toList();
     }
 
     @Override
-    public CreditCardForm create(CreditCardForm entity) {
+    public FormModel create(FormModel entity) {
         UUID id = UUID.randomUUID();
         entity.setId(id);
         return cardFormMap.put(entity.getId(), entity);
     }
 
     @Override
-    public CreditCardForm update(CreditCardForm entity) {
+    public FormModel update(FormModel entity) {
         return cardFormMap.put(entity.getId(), entity);
     }
 
     @Override
-    public void delete(CreditCardForm entity) {
+    public void delete(FormModel entity) {
         cardFormMap.remove(entity.getId());
     }
 

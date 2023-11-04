@@ -5,14 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.jala.university.dao.EntityDAO;
-import org.springframework.data.annotation.CreatedDate;
+
 import java.util.Date;
 import java.util.UUID;
 @Entity(name = "form")
 @Getter
 @Setter
 @Builder
-public class    CreditCardForm implements EntityDAO<UUID> {
+public class FormModel implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_form",nullable = false)
@@ -29,4 +29,7 @@ public class    CreditCardForm implements EntityDAO<UUID> {
     private String email;
     @Column(nullable = false)
     private Date aplicationDate;
+    @OneToOne(targetEntity = CreditCardModel.class)
+    private CreditCardModel creditCardTable;
+
 }

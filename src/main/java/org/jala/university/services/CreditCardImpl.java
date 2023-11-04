@@ -1,6 +1,6 @@
-package org.jala.university.domain;
+package org.jala.university.services;
 
-import org.jala.university.model.CreditCardForm;
+import org.jala.university.model.FormModel;
 import org.jala.university.dao.CreditCardDao;
 
 import java.util.List;
@@ -14,22 +14,22 @@ public class CreditCardImpl implements CreditCardModule{
     }
 
     @Override
-    public void create(CreditCardForm creditCard) {
+    public void create(FormModel creditCard) {
         creditCardDao.create(creditCard);
     }
 
     @Override
-    public CreditCardForm get(UUID id) {
+    public FormModel get(UUID id) {
         return creditCardDao.findOne(id);
     }
 
     @Override
-    public List<CreditCardForm> getAll() {
+    public List<FormModel> getAll() {
         return creditCardDao.findAll();
     }
 
     @Override
-    public CreditCardForm update(CreditCardForm creditCard) {
+    public FormModel update(FormModel creditCard) {
         return creditCardDao.update(creditCard);
     }
 
@@ -38,4 +38,5 @@ public class CreditCardImpl implements CreditCardModule{
         creditCardDao.deleteById(id);
 
     }
+
 }
