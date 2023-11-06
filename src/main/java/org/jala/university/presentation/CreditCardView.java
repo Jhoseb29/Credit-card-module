@@ -115,7 +115,8 @@ public class CreditCardView extends JFrame {
       InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
       UUID cardId = infoCreditCard.generateCreditCardData();
       dispose();
-      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId));
+      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId, creditCardForm));
+
 
     });
   }

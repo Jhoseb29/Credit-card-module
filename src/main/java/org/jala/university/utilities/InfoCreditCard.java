@@ -24,7 +24,6 @@ public class InfoCreditCard {
     }
 
     public UUID generateCreditCardData() {
-        FormModel creditCardForm = FormModel.builder().build();
         double income = creditCardForm.getIncome();
         System.out.println("ID FORM" + creditCardForm.getId());
         System.out.println("INCOME " + creditCardForm.getIncome());
@@ -38,12 +37,11 @@ public class InfoCreditCard {
         int expirationYear = calendar.get(Calendar.YEAR);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
         String expirationDate = dateFormat.format(calendar.getTime());
-        boolean approved = income > 3000 ;
+        boolean approved = true ;
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
         CreditCardModel creditCardTable = CreditCardModel.builder()
-                //.creditCardForm(creditCardForm)
                 .credit_limit(creditLimit)
                 .current_limit(creditLimit)
                 .expiration_month(expirationMonth)
