@@ -1,6 +1,6 @@
 package org.jala.university.presentation;
 
-import org.jala.university.services.CreditCardTableModule;
+import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.utilities.Dialog;
 
@@ -12,11 +12,11 @@ import java.util.UUID;
 
 public class InformationCreditCardView {
     private JFrame frame;
-    private final CreditCardTableModule creditCardModule;
+    private final CreditCardModule creditCardModule;
     private final UUID cardId;
     private final FormModel creditCardForm = FormModel.builder().build();
 
-    public InformationCreditCardView(CreditCardTableModule creditCardModule, UUID cardId) {
+    public InformationCreditCardView(CreditCardModule creditCardModule, UUID cardId) {
         this.creditCardModule = creditCardModule;
         this.cardId = cardId;
 

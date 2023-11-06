@@ -2,7 +2,7 @@ package org.jala.university.utilities;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.jala.university.services.CreditCardTableModule;
+import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.model.CreditCardModel;
 
@@ -12,11 +12,11 @@ import java.util.Date;
 import java.util.UUID;
 
 public class InfoCreditCard {
-    private  final CreditCardTableModule creditCardTableModule;
+    private  final CreditCardModule creditCardTableModule;
     private final EntityManager entityManager;
     private final FormModel creditCardForm;
 
-    public InfoCreditCard(CreditCardTableModule creditCardTableModule,  EntityManager entityManager1, FormModel creditCardForm) {
+    public InfoCreditCard(CreditCardModule creditCardTableModule, EntityManager entityManager1, FormModel creditCardForm) {
         this.creditCardTableModule = creditCardTableModule;
         this.entityManager = entityManager1;
         this.creditCardForm = creditCardForm;

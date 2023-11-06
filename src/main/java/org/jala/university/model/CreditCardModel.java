@@ -35,6 +35,8 @@ public class CreditCardModel implements EntityDAO<UUID> {
     private int status;
     @Column
     private int NIP;
+    @OneToOne(targetEntity = FormModel.class)
+    private FormModel formModel;
 
 
 

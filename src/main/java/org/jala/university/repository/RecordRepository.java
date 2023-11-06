@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface RecordTableRepository extends JpaRepository<RecordModel, UUID> {
+public interface RecordRepository extends JpaRepository<RecordModel, UUID> {
 }

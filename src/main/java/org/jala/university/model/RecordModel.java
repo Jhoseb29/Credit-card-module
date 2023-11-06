@@ -27,7 +27,4 @@ public class RecordModel implements EntityDAO<UUID> {
     private int PIN;
     @Column
     private int status;
-//    @OneToOne
-//    @JoinColumn(name = "idCreditCard")
-//    private CreditCardTable creditCardTable;
 }

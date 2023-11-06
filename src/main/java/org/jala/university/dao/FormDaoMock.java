@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class CreditCartDaoMock extends CreditCardDao {
+public class FormDaoMock extends FormDao {
     private final Map<UUID, FormModel> cardFormMap = new HashMap<>();
-    public CreditCartDaoMock() {
+    public FormDaoMock() {
         super(null);
     }
     @Override
