@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CreditCardFormRepository extends JpaRepository<FormModel, UUID> {
-    @Query
-    public int checkCard();
+public interface FormRepository extends JpaRepository<FormModel, UUID> {
+    @Query(value = "SELECT COUNT(*) FROM credit_card", nativeQuery = true)
+    int checkCard();
 }

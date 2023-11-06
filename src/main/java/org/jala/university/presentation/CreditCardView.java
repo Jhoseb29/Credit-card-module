@@ -2,12 +2,12 @@ package org.jala.university.presentation;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.jala.university.dao.CreditCardTableDao;
+import org.jala.university.dao.CreditCardDao;
 import org.jala.university.utilities.InfoCreditCard;
-import org.jala.university.services.CreditCardTableImpl;
-import org.jala.university.services.CreditCardTableModule;
-import org.jala.university.model.FormModel;
+import org.jala.university.services.CreditCardImpl;
 import org.jala.university.services.CreditCardModule;
+import org.jala.university.model.FormModel;
+import org.jala.university.services.FormModule;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.Validator;
 
@@ -23,13 +23,13 @@ import java.util.UUID;
 
 public class CreditCardView extends JFrame {
 
-  private final CreditCardModule creditCardModule;
+  private final FormModule creditCardModule;
   private final JPanel topPanel;
   private final JPanel btnPanel;
   private final EntityManager entityManager;
   Map<String, JTextField> inputFields = new HashMap<>();
 
-  public CreditCardView(CreditCardModule creditCardModule, EntityManager entityManager) {
+  public CreditCardView(FormModule creditCardModule, EntityManager entityManager) {
     this.creditCardModule = creditCardModule;
     this.entityManager = entityManager;
     setTitle("Credit Card Form");
@@ -56,7 +56,6 @@ public class CreditCardView extends JFrame {
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
-      dispose();
       String address = inputFields.get("Address").getText();
       String phoneNumber = inputFields.get("Cellphone").getText();
       String incomeText = inputFields.get("Income").getText();
@@ -118,14 +117,11 @@ public class CreditCardView extends JFrame {
       transaction.begin();
       creditCardModule.create(creditCardForm);
       transaction.commit();
-      //creditCardModule.create(creditCardForm);
       clearFormFields();
-      //System.out.println(income);
-      //creditCardForm.setIncome(income);
-      //System.out.println("guardado en la tarjeta" + creditCardForm.getIncome());
-      CreditCardTableModule creditCardTableModule = new CreditCardTableImpl(new CreditCardTableDao(entityManager));
+      CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(entityManager));
       InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
       UUID cardId = infoCreditCard.generateCreditCardData();
+      dispose();
       SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId));
 
     });

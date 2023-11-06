@@ -23,13 +23,12 @@ public class FormModel implements EntityDAO<UUID> {
     private String phoneNumber;
     @Column(nullable = false)
     private double income;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "DATE")
     private Date birthdate;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "DATE")
     private Date aplicationDate;
-    @OneToOne(targetEntity = CreditCardModel.class)
-    private CreditCardModel creditCardTable;
+
 
 }
