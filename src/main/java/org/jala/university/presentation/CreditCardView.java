@@ -11,6 +11,7 @@ import org.jala.university.services.FormModule;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.Validator;
 
+import javax.swing.SwingUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
