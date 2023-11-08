@@ -2,6 +2,7 @@ package org.jala.university.utilities;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import org.jala.university.Services.CreditCard;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.model.CreditCardModel;
@@ -39,6 +40,7 @@ public class InfoCreditCard {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
         String expirationDate = dateFormat.format(calendar.getTime());
         boolean approved = income > 3000 ;
+        String CreditCard = null;
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
@@ -51,6 +53,7 @@ public class InfoCreditCard {
                 .approved_card(approved)
                 .NIP(1234)
                 .status(1)
+                .card(CreditCard)
                 .build();
         creditCardTableModule.create(creditCardTable);
         transaction.commit();

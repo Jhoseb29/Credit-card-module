@@ -1,5 +1,6 @@
 package org.jala.university.presentation;
 
+import org.jala.university.Services.CreditCard;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.utilities.Dialog;
@@ -30,11 +31,13 @@ public class InformationCreditCardView {
         JButton btnBalance = new JButton("See Balance");
         JButton btnBalanceLimit = new JButton("See Balance Limit");
         JButton btnExpirationDate = new JButton("See Expiration Date");
+        JButton btnCardManagement = new JButton("Card management");
 
         frame.add(btnStatus);
         frame.add(btnBalance);
         frame.add(btnBalanceLimit);
         frame.add(btnExpirationDate);
+        frame.add(btnCardManagement);
 
 
         btnStatus.addActionListener(new ActionListener() {
@@ -69,6 +72,12 @@ public class InformationCreditCardView {
             }
         });
 
+        btnCardManagement.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CreditCard cardManagent = new CreditCard();
+                cardManagent.setVisible(true);
+            }
+        });
 
         frame.setVisible(true);
     }
