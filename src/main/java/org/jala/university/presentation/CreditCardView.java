@@ -53,7 +53,7 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
@@ -115,7 +115,7 @@ public class CreditCardView extends JFrame {
       InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
       UUID cardId = infoCreditCard.generateCreditCardData();
       dispose();
-      //SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId, creditCardForm));
+      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId, creditCardForm));
 
 
     });
