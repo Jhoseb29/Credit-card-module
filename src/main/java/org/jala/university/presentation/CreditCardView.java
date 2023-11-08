@@ -2,8 +2,13 @@ package org.jala.university.presentation;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import org.jala.university.dao.CreditCardTableDao;
+import org.jala.university.dates.InfoCreditCard;
+import org.jala.university.domain.CreditCardTableImpl;
+import org.jala.university.domain.CreditCardTableModule;
 import org.jala.university.model.CreditCardForm;
 import org.jala.university.domain.CreditCardModule;
+import org.jala.university.model.CreditCardTable;
 import org.jala.university.validations.Dialog;
 import org.jala.university.validations.Validator;
 
@@ -14,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class CreditCardView extends JFrame {
@@ -113,6 +119,12 @@ public class CreditCardView extends JFrame {
       transaction.commit();
       creditCardModule.create(creditCardForm);
       clearFormFields();
+
+      CreditCardTableModule creditCardTableModule = new CreditCardTableImpl(new CreditCardTableDao(entityManager));
+      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager);
+      UUID cardId = infoCreditCard.generateCreditCardData();
+      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId));
+
     });
   }
 
