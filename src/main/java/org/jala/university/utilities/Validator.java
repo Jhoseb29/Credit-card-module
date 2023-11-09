@@ -17,7 +17,7 @@ public class Validator {
   }
 
   public static boolean isValidIncome(double income) {
-    return income >= 0;
+    return income >= 3000;
   }
 
   public static boolean isValidPhoneNumber(String phoneNumber) {
