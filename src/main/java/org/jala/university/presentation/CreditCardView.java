@@ -53,17 +53,26 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
       String address = inputFields.get("Address").getText();
       String phoneNumber = inputFields.get("Cellphone").getText();
-      double income = Double.parseDouble(inputFields.get("Income").getText());
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-      Date applicationDate = new Date();
+      String incomeText = inputFields.get("Income").getText();
+      String birthdateText = inputFields.get("Birthdate (dd/mm/aaaa)").getText();
       String email = inputFields.get("Email").getText();
       Date birthdate = null;
+
+      // Validación de campos vacíos
+      if (address.isEmpty() || phoneNumber.isEmpty() || incomeText.isEmpty() || birthdateText.isEmpty() || email.isEmpty()) {
+        Dialog.error("Por favor, complete todos los campos.");
+        return;
+      }
+
+      double income;
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+      Date applicationDate = new Date();
 
       //Validators
       try {
@@ -87,6 +96,7 @@ public class CreditCardView extends JFrame {
         return;
       }
       try {
+        income = Double.parseDouble(incomeText);
         if (!Validator.isValidIncome(income)) {
           Dialog.error("Los ingresos no pueden ser negativos.");
           return;
