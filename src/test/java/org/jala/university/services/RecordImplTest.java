@@ -3,6 +3,7 @@ package org.jala.university.services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.jala.university.dao.RecordDao;
 import org.jala.university.model.RecordModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,45 +26,46 @@ public class RecordImplTest {
     @Test
     void createRecordTest(){
         EntityManager entityManager = mock(EntityManager.class);
-        recordDao = new RecorDao(UUID.class, RecordModel.class, entityManager);
+        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
         RecordModel recordModel = RecordModel.builder().id(UUID.randomUUID()).build();
 
-        RecordModel newRecord = record.create(recordModel);
+        RecordModel newRecord = recordDao.create(recordModel);
         assertEquals(recordModel, newRecord);
         verify(entityManager, timeout(1)).persist(newRecord);
     }
     @Test
     void getAllRecordTest() {
         EntityManager entityManager = mock(EntityManager.class);
-        recordDao = new RecorDao(UUID.class, RecordModel.class, entityManager);
+        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
         List<RecordModel> recordModels = Arrays.asList(
                 RecordModel.builder().id(UUID.randomUUID()).build()
 
         );
-        when(entityManager.createQuery(anyString(), eq(RecordModel.class))).thenReturn((TypedQuery<RecordModel>) mock(Query.class));
-        when(entityManager.createQuery(anyString(), eq(RecordModel.class)).getResultList()).thenReturn(recordModels);
-        List<RecordModel> actualRecords = record.findAll();
+        TypedQuery<RecordModel> typedQuery = mock(TypedQuery.class);
+        when(entityManager.createQuery(anyString(), eq(RecordModel.class))).thenReturn(typedQuery);
+        when(typedQuery.getResultList()).thenReturn(recordModels);
+        List<RecordModel> actualRecords = recordDao.findAll();
         assertEquals(recordModels, actualRecords);
     }
     @Test
     void deleteRecordTest() {
         EntityManager entityManager = mock(EntityManager.class);
-        recordDao = new RecorDao(UUID.class, RecordModel.class, entityManager);
+        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
         RecordModel recordModel = RecordModel.builder().id(UUID.randomUUID()).build();
 
-        record.delete(recordModel);
+        recordDao.delete(recordModel);
         verify(entityManager, times(1)).remove(recordModel);
 
     }
     @Test
     void deleteRecordByIdTest() {
         EntityManager entityManager = mock(EntityManager.class);
-        recordDao = new RecorDao(UUID.class, RecordModel.class, entityManager);
-        RecordModel recordModel = RecordModel.builder().id(UUID.randomUUID()).build();
+        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
         UUID recordIdToDelete = UUID.randomUUID();
-        RecordModel recordModelDelete = RecordModel.builder().id(recordIdToDelete).build();
-
-        record.deleteById(recordIdToDelete);
+        RecordModel recordModel = RecordModel.builder().id(UUID.randomUUID()).build();
+        when(entityManager.find(eq(RecordModel.class), eq(recordIdToDelete))).thenReturn(recordModel);
+        recordDao.deleteById(recordIdToDelete);
+        verify(entityManager, times(1)).remove(recordModel);
 
     }
 
