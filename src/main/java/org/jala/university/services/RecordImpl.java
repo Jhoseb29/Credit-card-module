@@ -2,10 +2,11 @@ package org.jala.university.services;
 
 import org.jala.university.dao.RecordDao;
 import org.jala.university.model.RecordModel;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
-
+@Repository
 public class RecordImpl {
     private final RecordDao recordDao;
     public RecordImpl(RecordDao recordDao) {
@@ -22,8 +23,11 @@ public class RecordImpl {
         return recordDao.findAll();
     }
 
-    public void delete(RecordModel recordModel) {
-        recordDao.delete(recordModel);
+    public void delete() {
+        List<RecordModel> allRecords = recordDao.findAll();
+        for (RecordModel recordModel : allRecords) {
+            recordDao.delete(recordModel);
+        }
     }
 
     public void deleteById(UUID recordIdToDelete) {

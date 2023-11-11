@@ -17,11 +17,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class RecordImplTest {
-    RecordDao recordDao = mock(RecordDao.class);
-    RecordImpl record;
+
     @BeforeEach
     public void setup(){
-        record = new RecordImpl(recordDao);
+
     }
     @Test
     void createRecordTest(){
