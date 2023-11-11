@@ -49,6 +49,8 @@ public class RecordView extends JFrame {
         topPanel.add(scrollPane, BorderLayout.CENTER);
         JButton addButtonDeleteAll = new JButton("DELETE ALL");
         JButton addButtonDeleteByID = new JButton("DELETE BY ID");
+        btnPanel.add(addButtonDeleteByID);
+        btnPanel.add(addButtonDeleteAll);
 
         addButtonDeleteByID.addActionListener(e -> {
             if (selectedAccountId != null) {

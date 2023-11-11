@@ -22,7 +22,7 @@ public class RecordDao extends AbstractDAO<RecordModel, UUID> {
 
     @Transactional
     public RecordModel create(RecordModel entity) {
-        super.create(entity);
+        entityManager.persist(entity);
         return entity;
     }
 

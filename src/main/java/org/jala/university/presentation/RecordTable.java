@@ -3,6 +3,8 @@ package org.jala.university.presentation;
 import org.jala.university.model.RecordModel;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,11 +58,19 @@ public class RecordTable extends AbstractTableModel {
             case 1:
                 return String.class;
             case 2:
-                return Long.class;
+                return Integer.class;
+            case 3:
+                return Integer.class;
+            case 4:
+                return Integer.class;
+            case 5:
+                return Date.class;
+
         }
         return null;
     }
     public void refresh(List<RecordModel> list) {
+        Collections.reverse(list);
         this.recordModels = list;
         fireTableDataChanged();
     }
