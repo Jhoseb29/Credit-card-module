@@ -38,19 +38,9 @@ public class InterfazView extends  JFrame {
         btnStatus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
-                EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-                FormModule creditCardModule = new FormImpl(new FormDao(entityManager));
-
-                SwingUtilities.invokeLater(() -> {
-                    EntityTransaction transaction = entityManager.getTransaction();
-                    transaction.begin();
-
-                    CreditCardView creditCardFormUI = new CreditCardView(creditCardModule, entityManager);
-                    creditCardFormUI.setVisible(true);
-                    transaction.commit();
-                });
+                CreditCardView creditCardFormUI = new CreditCardView();
+                creditCardFormUI.setVisible(true);
             }
         });
     }

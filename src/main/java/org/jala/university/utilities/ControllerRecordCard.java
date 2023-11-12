@@ -1,26 +1,27 @@
 package org.jala.university.utilities;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import org.jala.university.dao.RecordDao;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class ControllerRecordCard {
     private final CreditCardModel creditCardModel;
-    private final RecordImpl recordImpl;
     private final EntityManager entityManager;
     private final   CreditCardModule creditCardModule;
+    private final RecordImpl record;
 
-    public ControllerRecordCard(RecordImpl recordImpl, CreditCardModel creditCardModel, EntityManager entityManager,
-    CreditCardModule creditCardModule ) {
-        this.recordImpl = recordImpl;
+    public ControllerRecordCard(CreditCardModel creditCardModel, EntityManager entityManager, CreditCardModule creditCardModule, RecordImpl record ) {
         this.creditCardModel = creditCardModel;
         this.entityManager = entityManager;
         this.creditCardModule = creditCardModule;
+        this.record = record;
     }
     public String getTypeOfOperation(EnumOperations operation) {
        return operation.getOperationsName();
@@ -61,7 +62,7 @@ public class ControllerRecordCard {
                 .date(new Date())
                 .creditCard(creditCardModel)
                 .build();
-        recordImpl.create(logRecord);
+        record.create(logRecord);
         commitTransaction();
     }
     private void commitTransaction() {

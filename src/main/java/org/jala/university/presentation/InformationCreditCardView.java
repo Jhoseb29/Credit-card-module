@@ -1,5 +1,6 @@
 package org.jala.university.presentation;
 
+import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.services.RecordImpl;
@@ -14,17 +15,13 @@ import java.util.UUID;
 
 public class InformationCreditCardView {
     private JFrame frame;
-    private final CreditCardModule creditCardModule;
-    private final UUID cardId;
-    private final FormModel creditCardForm;
+    private final CreditCardModel creditCardModel;
     private ControllerRecordCard controllerRecordCard; // Agregado
     private RecordImpl record; // Agregado
 
 
-    public InformationCreditCardView(CreditCardModule creditCardModule, UUID cardId, FormModel creditCardForm) {
-        this.creditCardModule = creditCardModule;
-        this.cardId = cardId;
-        this.creditCardForm = creditCardForm;
+    public InformationCreditCardView(CreditCardModel creditCardModel, ControllerRecordCard controllerRecordCard, RecordImpl record) {
+        this.creditCardModel = creditCardModel;
         this.controllerRecordCard = controllerRecordCard; // Agregado
         this.record = record; // Agregado
 
@@ -53,33 +50,30 @@ public class InformationCreditCardView {
 
         btnStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String status = creditCardModule.getAccountStatus(cardId);
+                String status = String.valueOf(creditCardModel.getStatus());
                 Dialog.getInformation("Status:" + status);
             }
         });
 
         btnBalance.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float balance = creditCardModule.getCurrentLimit(cardId);
+                float balance = (float) creditCardModel.getCurrent_limit();
                Dialog.getInformation("Balance: " + balance);
             }
         });
 
         btnBalanceLimit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float creditLimit = creditCardModule.getCredit_limit(cardId, creditCardForm.getIncome());
+                float creditLimit = (float) creditCardModel.getCredit_limit();
                 Dialog.getInformation("Credit Limit: " + creditLimit);
             }
         });
 
         btnExpirationDate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String expirationDate = creditCardModule.getExpirationDate(cardId);
-                if (!expirationDate.equals("Expiration date not available")) {
-                    Dialog.getInformation("Expiration Date: " + expirationDate);
-                } else {
-                    Dialog.getInformation("Expiration date not available");
-                }
+                int expirationMonth = creditCardModel.getExpiration_month();
+                int expirationYear = creditCardModel.getExpiration_year();
+                Dialog.getInformation("Expiration Date: " + expirationMonth + "/" + expirationYear);
             }
         });
 
@@ -100,6 +94,7 @@ public class InformationCreditCardView {
 
         btnActionsCard.addActionListener(event -> {
             // Crear una instancia de CreditCardActionsView
+
             CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record);
 
             // Hacer visible la nueva vista
