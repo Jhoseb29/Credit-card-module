@@ -6,13 +6,14 @@ import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
+
 public class CreditCardActionsView extends JFrame {
     private final ControllerRecordCard controllerRecordCard;
     private final RecordImpl record;
     private JPanel topPanel;
     private JPanel btnPanel;
 
-    public  CreditCardActionsView(ControllerRecordCard controllerRecordCard, RecordImpl record) {
+    public CreditCardActionsView(ControllerRecordCard controllerRecordCard, RecordImpl record) {
         this.controllerRecordCard = controllerRecordCard;
         this.record = record;
         setTitle("Credit Card Actions");
@@ -48,7 +49,7 @@ public class CreditCardActionsView extends JFrame {
                     statusOptions[0]
             );
             if (select != null){
-                int newStatus = (select.equals("Active"))?1:0;
+                int newStatus = (select.equals("Active")) ? 1 : 0;
                 controllerRecordCard.updateStatus(newStatus);
             }
         });
@@ -92,9 +93,6 @@ public class CreditCardActionsView extends JFrame {
         showHistoryButton.addActionListener(event->{
             RecordView recordView = new RecordView(record);
             recordView.setVisible(true);
-
-
-
 
         });
 

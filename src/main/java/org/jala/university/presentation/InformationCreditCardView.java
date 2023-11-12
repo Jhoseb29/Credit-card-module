@@ -2,6 +2,8 @@ package org.jala.university.presentation;
 
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
+import org.jala.university.services.RecordImpl;
+import org.jala.university.utilities.ControllerRecordCard;
 import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
@@ -15,12 +17,16 @@ public class InformationCreditCardView {
     private final CreditCardModule creditCardModule;
     private final UUID cardId;
     private final FormModel creditCardForm;
+    private ControllerRecordCard controllerRecordCard; // Agregado
+    private RecordImpl record; // Agregado
 
 
     public InformationCreditCardView(CreditCardModule creditCardModule, UUID cardId, FormModel creditCardForm) {
         this.creditCardModule = creditCardModule;
         this.cardId = cardId;
         this.creditCardForm = creditCardForm;
+        this.controllerRecordCard = controllerRecordCard; // Agregado
+        this.record = record; // Agregado
 
         frame = new JFrame("Credit Card");
         frame.setLocationRelativeTo(null);
@@ -33,6 +39,7 @@ public class InformationCreditCardView {
         JButton btnBalanceLimit = new JButton("See Balance Limit");
         JButton btnExpirationDate = new JButton("See Expiration Date");
         JButton btnCardManagement = new JButton("Card management");
+        JButton btnGeneratePin = new JButton("PIN");
         JButton btnActionsCard = new JButton("ACTIONS CARD");
 
         frame.add(btnStatus);
@@ -40,6 +47,7 @@ public class InformationCreditCardView {
         frame.add(btnBalanceLimit);
         frame.add(btnExpirationDate);
         frame.add(btnCardManagement);
+        frame.add(btnGeneratePin);
         frame.add(btnActionsCard);
 
 
@@ -81,9 +89,21 @@ public class InformationCreditCardView {
                 cardManagent.setVisible(true);
             }
         });
-        btnActionsCard.addActionListener(event->{
 
+        btnGeneratePin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RandomPinGeneratorView pinGeneratorView = new RandomPinGeneratorView();
+                pinGeneratorView.setVisible(true);
+            }
+        });
 
+        btnActionsCard.addActionListener(event -> {
+            // Crear una instancia de CreditCardActionsView
+            CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record);
+
+            // Hacer visible la nueva vista
+            creditCardActionsView.setVisible(true);
         });
 
         frame.setVisible(true);

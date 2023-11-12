@@ -1,49 +1,16 @@
 package org.jala.university;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import org.jala.university.dao.CreditCardDao;
-import org.jala.university.dao.RecordDao;
-import org.jala.university.model.CreditCardModel;
-import org.jala.university.model.RecordModel;
-import org.jala.university.presentation.CreditCardActionsView;
-import org.jala.university.services.CreditCardImpl;
-import org.jala.university.services.CreditCardModule;
-import org.jala.university.services.RecordImpl;
-import org.jala.university.utilities.ControllerRecordCard;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import org.jala.university.presentation.InterfazView;
+
+import javax.swing.*;
 
 public class main {
     public static void main(String[] args) {
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        CreditCardDao creditCardDao = new CreditCardDao(entityManager);
-        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
-        RecordImpl recordImpl = new RecordImpl(recordDao);
-        CreditCardModule creditCardModule = new CreditCardImpl(creditCardDao);
-        CreditCardModel creditCardModel = CreditCardModel.builder()
-                    .credit_limit(3000)
-                    .current_limit(2000)
-                    .expiration_month(12)
-                    .expiration_year(2027)
-                    .approved_card(true)
-                    .NIP(6666)
-                    .status(1)
-                    .records(new ArrayList<>())
-                    .build();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        creditCardModule.create(creditCardModel);
-        transaction.commit();
-        ControllerRecordCard controllerRecordCard = new ControllerRecordCard(recordImpl, creditCardModel, entityManager, creditCardModule);
-        CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, recordImpl);
-        creditCardActionsView.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            InterfazView interfazUI = new InterfazView();
 
-
+        });
     }
 }

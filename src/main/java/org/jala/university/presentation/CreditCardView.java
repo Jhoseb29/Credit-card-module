@@ -53,7 +53,7 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
