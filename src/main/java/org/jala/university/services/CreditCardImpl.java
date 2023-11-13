@@ -18,6 +18,7 @@ public class CreditCardImpl implements CreditCardModule {
         creditCardDao.create(creditCard);
 
     }
+
     @Override
     public CreditCardModel get(UUID id) {
         return creditCardDao.findOne(id);
@@ -37,26 +38,4 @@ public class CreditCardImpl implements CreditCardModule {
     public void delete(UUID id) {
         creditCardDao.deleteById(id);
     }
-
-    @Override
-    public float getCurrentLimit(UUID id) {
-        return (float) creditCardDao.getCurrentLimit(id);
-    }
-
-    @Override
-    public float getCredit_limit(UUID id, double income) {
-        return creditCardDao.calculateCreditLimit(id, income);
-    }
-
-    @Override
-    public String getAccountStatus(UUID id) {
-        return creditCardDao.getAccountStatus(id);
-    }
-
-    @Override
-    public String getExpirationDate(UUID id) {
-       return creditCardDao.getExpirationDate(id);
-    }
-
-
 }

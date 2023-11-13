@@ -13,33 +13,50 @@ public class Validator {
   private static final Pattern PHONE_NUMBER_REGEX = Pattern.compile(PHONE_NUMBER_PATTERN);
 
   public static boolean isValidEmail(String email) {
-    return EMAIL_REGEX.matcher(email).matches();
+    return email != null && EMAIL_REGEX.matcher(email).matches();
   }
 
   public static boolean isValidIncome(double income) {
-    return income >= 3000;
+    return income >= 300;
   }
 
   public static boolean isValidPhoneNumber(String phoneNumber) {
-    return PHONE_NUMBER_REGEX.matcher(phoneNumber).matches();
+    return phoneNumber != null && phoneNumber.matches("[0-9]{7,11}");
   }
 
   public static boolean isValidBirthdate(String birthdate) {
-    try {
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-      Date parsedDate = dateFormat.parse(birthdate);
-
-      // Obtener la fecha actual
-      Date currentDate = new Date();
-
-      // Calcular la edad en años
-      long ageInMillis = currentDate.getTime() - parsedDate.getTime();
-      long ageInYears = ageInMillis / (1000L * 60 * 60 * 24 * 365);
-
-      // Validar que la persona tiene al menos 18 años
-      return ageInYears >= 18;
-    } catch (ParseException e) {
-      return false;
+    if (birthdate == null || birthdate.isEmpty()) {
+      return false; // Fecha nula o vacía es inválida
     }
+
+    SimpleDateFormat[] dateFormats = {
+        new SimpleDateFormat("MM/dd/yyyy"),
+        new SimpleDateFormat("dd/MM/yyyy"),
+        new SimpleDateFormat("yyyy/MM/dd"),
+        // Agrega otros formatos aquí según sea necesario
+    };
+
+    for (SimpleDateFormat dateFormat : dateFormats) {
+      try {
+        dateFormat.setLenient(false); // Desactiva la flexibilidad en el análisis
+        Date parsedDate = dateFormat.parse(birthdate);
+
+        // Obtener la fecha actual
+        Date currentDate = new Date();
+
+        // Calcular la edad en años
+        long ageInMillis = currentDate.getTime() - parsedDate.getTime();
+        long ageInYears = ageInMillis / (1000L * 60 * 60 * 24 * 365);
+
+        // Validar que la persona tiene al menos 18 años
+        if (ageInYears >= 18) {
+          return true; // Si la edad es válida, entonces la fecha también es válida
+        }
+      } catch (ParseException ignored) {
+        // Ignorar ParseException, ya que estamos probando diferentes formatos
+      }
+    }
+
+    return false; // Si no coincide con ninguno de los formatos o la edad no es válida, es inválida
   }
 }

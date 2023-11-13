@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jala.university.dao.EntityDAO;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(name = "record")
@@ -27,4 +28,9 @@ public class RecordModel implements EntityDAO<UUID> {
     private int PIN;
     @Column
     private int status;
+    @Column
+    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "creditCardId")
+    private CreditCardModel creditCard;
 }
