@@ -5,26 +5,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.jala.university.dao.EntityDAO;
-import org.springframework.data.annotation.CreatedDate;
-import java.util.Date;
+
 import java.util.UUID;
 
-@Entity
+@Entity(name = "credit_card")
 @Getter
 @Setter
 @Builder
-
-public class CreditCardTable implements EntityDAO<UUID> {
+public class CreditCardModel implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "idCreditCard")
+    @Column(name = "id_credit_card")
     private UUID id;
     @Column
     private boolean approved_card;
     @Column
-    private float credit_limit;
+    private double credit_limit;
     @Column
-    private float current_limit;
+    private double current_limit;
     @Column
     private String card;
     @Column
@@ -37,25 +35,7 @@ public class CreditCardTable implements EntityDAO<UUID> {
     private int status;
     @Column
     private int NIP;
-    @OneToOne
-    @JoinColumn(name = "idCreditCardForm")
-    private CreditCardForm creditCardForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @OneToOne(targetEntity = FormModel.class)
+    private FormModel formModel;
 
 }

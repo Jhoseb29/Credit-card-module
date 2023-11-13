@@ -5,23 +5,14 @@
              version="2.2">
     <persistence-unit name="CardModule">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>org.jala.university.model.CreditCardForm</class>
-        <class>org.jala.university.model.CreditCardTable</class>
-        <class>org.jala.university.model.RecordTable</class>
+        <class>org.jala.university.model.FormModel</class>
+        <class>org.jala.university.model.CreditCardModel</class>
+        <class>org.jala.university.model.RecordModel</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CreditCardModule"/>
-<<<<<<< HEAD
-            <property name="javax.persistence.jdbc.user" value="byteRebel"/>
-            <property name="javax.persistence.jdbc.password" value="byteRebels123"/>
-=======
             <property name="javax.persistence.jdbc.user" value="root"/>
-<<<<<<< HEAD
             <property name="javax.persistence.jdbc.password" value="Afeksh21"/>
->>>>>>> bd8aa354d2cc600cfd84fe3e2c9e8772af1e1d6f
-=======
-            <property name="javax.persistence.jdbc.password" value="evangelion"/>
->>>>>>> c06c761db5ccf6419f8110b1a279976bc17abb2b
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

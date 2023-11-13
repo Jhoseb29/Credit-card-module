@@ -1,4 +1,4 @@
-package org.jala.university.validations;
+package org.jala.university.utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +17,7 @@ public class Validator {
   }
 
   public static boolean isValidIncome(double income) {
-    return income >= 0;
+    return income >= 3000;
   }
 
   public static boolean isValidPhoneNumber(String phoneNumber) {

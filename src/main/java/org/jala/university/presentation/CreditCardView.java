@@ -2,16 +2,17 @@ package org.jala.university.presentation;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.jala.university.dao.CreditCardTableDao;
-import org.jala.university.dates.InfoCreditCard;
-import org.jala.university.domain.CreditCardTableImpl;
-import org.jala.university.domain.CreditCardTableModule;
-import org.jala.university.model.CreditCardForm;
-import org.jala.university.domain.CreditCardModule;
-import org.jala.university.model.CreditCardTable;
-import org.jala.university.validations.Dialog;
-import org.jala.university.validations.Validator;
+import org.jala.university.dao.CreditCardDao;
+import org.jala.university.model.CreditCardModel;
+import org.jala.university.utilities.InfoCreditCard;
+import org.jala.university.Services.CreditCardImpl;
+import org.jala.university.Services.CreditCardModule;
+import org.jala.university.model.FormModel;
+import org.jala.university.services.FormModule;
+import org.jala.university.utilities.Dialog;
+import org.jala.university.utilities.Validator;
 
+import javax.swing.SwingUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
@@ -24,14 +25,13 @@ import java.util.UUID;
 
 public class CreditCardView extends JFrame {
 
-  private final CreditCardModule creditCardModule;
+  private final FormModule creditCardModule;
   private final JPanel topPanel;
   private final JPanel btnPanel;
   private final EntityManager entityManager;
-  private JFrame frameCardView = new JFrame();
   Map<String, JTextField> inputFields = new HashMap<>();
 
-  public CreditCardView(CreditCardModule creditCardModule, EntityManager entityManager) {
+  public CreditCardView(FormModule creditCardModule, EntityManager entityManager) {
     this.creditCardModule = creditCardModule;
     this.entityManager = entityManager;
     setTitle("Credit Card Form");
@@ -63,23 +63,24 @@ public class CreditCardView extends JFrame {
       String incomeText = inputFields.get("Income").getText();
       String birthdateText = inputFields.get("Birthdate (dd/mm/aaaa)").getText();
       String email = inputFields.get("Email").getText();
+      Date birthdate = null;
 
-      // Verifica si algún campo está vacío
+      // Validación de campos vacíos
       if (address.isEmpty() || phoneNumber.isEmpty() || incomeText.isEmpty() || birthdateText.isEmpty() || email.isEmpty()) {
         Dialog.error("Por favor, complete todos los campos.");
         return;
       }
 
-      //Validators
       double income;
-      Date birthdate;
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+      Date applicationDate = new Date();
+
+      //Validators
       try {
-        income = Double.parseDouble(incomeText);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        birthdate = dateFormat.parse(birthdateText);
-      } catch (ParseException | NumberFormatException ex) {
-        Dialog.error("Por favor, ingrese datos válidos.");
-        return;
+        birthdate = dateFormat.parse(inputFields.get("Birthdate (dd/mm/aaaa)").getText());
+      } catch (ParseException ex) {
+        Dialog.error("Error al procesar la fecha de nacimiento.");
+
       }
 
       if (!Validator.isValidBirthdate(inputFields.get("Birthdate (dd/mm/aaaa)").getText())) {
@@ -96,6 +97,7 @@ public class CreditCardView extends JFrame {
         return;
       }
       try {
+        income = Double.parseDouble(incomeText);
         if (!Validator.isValidIncome(income)) {
           Dialog.error("Los ingresos no pueden ser negativos.");
           return;
@@ -106,29 +108,26 @@ public class CreditCardView extends JFrame {
       }
       Dialog.getInformation("Formulario aceptado. ¡Gracias por enviar su solicitud!");
 
-      CreditCardForm creditCardForm = CreditCardForm.builder()
-          .address(address)
-          .phoneNumber(phoneNumber)
-          .income(income)
-          .birthdate(birthdate)
-          .email(email)
-          .aplicationDate(new Date())
-          .build();
+
+      FormModel creditCardForm = FormModel.builder()
+              .address(address)
+              .phoneNumber(phoneNumber)
+              .income(income)
+              .birthdate(birthdate)
+              .email(email)
+              .aplicationDate(applicationDate)
+              .build();
       EntityTransaction transaction = entityManager.getTransaction();
       transaction.begin();
       creditCardModule.create(creditCardForm);
       transaction.commit();
-      creditCardModule.create(creditCardForm);
       clearFormFields();
-
-
-      CreditCardTableModule creditCardTableModule = new CreditCardTableImpl(new CreditCardTableDao(entityManager));
-      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager);
+      CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(UUID.class, CreditCardModel.class, entityManager));
+      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
       UUID cardId = infoCreditCard.generateCreditCardData();
-      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId));
+      dispose();
+      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId, creditCardForm));
 
-
-      closeCurrentFrame();
 
     });
   }
@@ -137,13 +136,5 @@ public class CreditCardView extends JFrame {
     for (JTextField textField : inputFields.values()) {
       textField.setText("");
     }
-  }
-  public void closeCurrentFrame(){
-    setVisible(false);
-    frameCardView.setEnabled(true);
-    frameCardView.setVisible(true);
-  }
-  public void setFrameCardView(JFrame frame){
-    frameCardView = frame;
   }
 }

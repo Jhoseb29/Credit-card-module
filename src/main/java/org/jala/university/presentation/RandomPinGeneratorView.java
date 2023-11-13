@@ -1,15 +1,17 @@
+package org.jala.university.presentation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class RandomPinGenerator extends JFrame {
+public class RandomPinGeneratorView extends JFrame {
 
   private JLabel pinLabel;
   private JButton generateButton;
 
-  public RandomPinGenerator() {
+  public RandomPinGeneratorView() {
     setTitle("PIN");
     setSize(300, 150);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,15 +39,5 @@ public class RandomPinGenerator extends JFrame {
     Random random = new Random();
     int pin = 1000 + random.nextInt(9000);
     return String.valueOf(pin);
-  }
-
-  public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        RandomPinGenerator pinGenerator = new RandomPinGenerator();
-        pinGenerator.setVisible(true);
-      }
-    });
   }
 }

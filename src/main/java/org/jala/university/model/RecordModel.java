@@ -9,12 +9,12 @@ import org.jala.university.dao.EntityDAO;
 
 import java.util.UUID;
 
-@Entity
+@Entity(name = "record")
 @Getter
 @Setter
 @Builder
 
-public class RecordTable implements EntityDAO<UUID> {
+public class RecordModel implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "recordCreditCard")
@@ -27,7 +27,5 @@ public class RecordTable implements EntityDAO<UUID> {
     private int PIN;
     @Column
     private int status;
-    @OneToOne
-    @JoinColumn(name = "idCreditCard")
-    private CreditCardTable creditCardTable;
 }
+
