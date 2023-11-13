@@ -1,17 +1,14 @@
 package org.jala.university.presentation;
 
 import org.jala.university.model.CreditCardModel;
-import org.jala.university.services.CreditCardModule;
-import org.jala.university.model.FormModel;
 import org.jala.university.services.RecordImpl;
-import org.jala.university.utilities.ControllerRecordCard;
+import org.jala.university.controllers.ControllerRecordCard;
 import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
 
 public class InformationCreditCardView {
     private JFrame frame;

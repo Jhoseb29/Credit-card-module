@@ -1,7 +1,7 @@
 package org.jala.university.presentation;
 
 import org.jala.university.services.RecordImpl;
-import org.jala.university.utilities.ControllerRecordCard;
+import org.jala.university.controllers.ControllerRecordCard;
 import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;

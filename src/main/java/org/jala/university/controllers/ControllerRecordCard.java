@@ -1,4 +1,4 @@
-package org.jala.university.utilities;
+package org.jala.university.controllers;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.jala.university.dao.RecordDao;
@@ -6,6 +6,8 @@ import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
+import org.jala.university.utilities.EnumOperations;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
