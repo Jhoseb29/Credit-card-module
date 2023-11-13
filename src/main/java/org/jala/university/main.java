@@ -1,5 +1,6 @@
 package org.jala.university;
 
+
 import org.jala.university.presentation.InterfazView;
 
 import javax.swing.*;
