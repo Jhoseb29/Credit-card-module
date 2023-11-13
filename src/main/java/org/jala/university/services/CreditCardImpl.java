@@ -61,22 +61,27 @@ public class CreditCardImpl implements CreditCardModule {
 
     @Override
     public boolean cancelCreditCard(UUID id) {
-        CreditCardModel creditCard = creditCardDao.findOne(id);
+        return false;
+    }
+
+
+    @Override
+    public void cancelCreditCardByNumber(String cardNumber) throws Exception {
+        // Obtener la tarjeta de crédito por número de tarjeta
+        CreditCardModel creditCard = creditCardDao.findByCardNumber(cardNumber);
+
         if (creditCard != null && creditCard.getCurrent_limit() > 0) {
-            // Validación del saldo de la tarjeta
-            return false;
+            // Validación del saldo de la tarjeta antes de cancelarla
+            throw new Exception("Cannot cancel credit card with a positive balance.");
         }
 
         if (creditCard != null) {
-            // Actualizar el estado de la tarjeta y establecer el límite actual en 0
-            creditCard.setStatus(2);
-            // O utiliza un valor numérico según tu preferencia
+            creditCard.setStatus(2);  // Supongamos que 2 representa el estado de tarjeta cancelada
             creditCard.setCurrent_limit(0.0);
             creditCardDao.update(creditCard);
-            return true;
+        } else {
+            throw new Exception("Credit card not found.");
         }
-
-        return false;
     }
 
 }

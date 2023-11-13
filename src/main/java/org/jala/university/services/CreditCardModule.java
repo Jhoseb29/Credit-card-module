@@ -16,4 +16,6 @@ public interface CreditCardModule {
     String getExpirationDate(UUID id);
 
     boolean cancelCreditCard(UUID id);
+
+    void cancelCreditCardByNumber(String cardNumber) throws Exception;
 }

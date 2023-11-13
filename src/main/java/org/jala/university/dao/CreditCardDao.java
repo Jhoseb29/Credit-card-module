@@ -1,18 +1,21 @@
 package org.jala.university.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import jakarta.persistence.TypedQuery;
 import org.jala.university.model.CreditCardModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
 
-    public CreditCardDao(Class<UUID> uuidClass, Class<CreditCardModel> creditCardModelClass, EntityManager entityManager) {
-        super(UUID.class, CreditCardModel.class, entityManager);
+    public CreditCardDao(Class<UUID> idClazz, Class<CreditCardModel> clazzToSet, EntityManager entityManager) {
+        super(idClazz, clazzToSet, entityManager);
     }
 
     @Transactional
@@ -56,5 +59,21 @@ public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
         return "Expiration date not available";
     }
 
+    @Transactional
+    public CreditCardModel findByCardNumber(String card) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<CreditCardModel> query = em.createQuery(
+                    "SELECT c FROM CreditCardModel c WHERE c.cardNumber = :cardNumber", CreditCardModel.class);
+            query.setParameter("cardNumber", card);
+            List<CreditCardModel> resultList = query.getResultList();
+            return resultList.isEmpty() ? null : resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

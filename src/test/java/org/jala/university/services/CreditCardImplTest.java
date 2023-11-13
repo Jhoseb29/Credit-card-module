@@ -6,9 +6,6 @@ import org.jala.university.model.CreditCardModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class CreditCardImplTest {
@@ -24,25 +21,24 @@ public class CreditCardImplTest {
     }
 
     @Test
-    void cancelCreditCardTest() {
+    void cancelCreditCardByNumberTest() {
         // Configurar datos de prueba
-        UUID cardId = UUID.randomUUID();
+        String cardNumber = "1234567890123456"; // Reemplaza con un número de tarjeta real
+        CreditCardModel mockCreditCardModel = mock(CreditCardModel.class);
 
         // Configurar el comportamiento del mock para devolver un mock de CreditCardModel
-        CreditCardModel mockCreditCardModel = mock(CreditCardModel.class);
-        when(creditCardDao.findOne(cardId)).thenReturn(mockCreditCardModel);
-
+        when(creditCardDao.findByCardNumber(cardNumber)).thenReturn(mockCreditCardModel);
 
         // Realizar la llamada al método que se está probando
-        boolean result = creditCardImpl.cancelCreditCard(cardId);
-
-        // Verificar el resultado esperado
-        assertTrue(result, "La cancelación de la tarjeta debería ser exitosa");
+        try {
+            creditCardImpl.cancelCreditCardByNumber(cardNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Verificar que se haya llamado al método de actualizar en CreditCardDao
         verify(creditCardDao, times(1)).update(any(CreditCardModel.class));
     }
-
 
     // Agregar más pruebas para otros métodos relacionados con la cancelación de tarjetas...
 }
