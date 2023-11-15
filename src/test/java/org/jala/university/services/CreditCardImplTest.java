@@ -23,7 +23,7 @@ public class CreditCardImplTest {
     @Test
     void cancelCreditCardByNumberTest() {
         // Configurar datos de prueba
-        String cardNumber = "1234567890123456"; // Reemplaza con un número de tarjeta real
+        String cardNumber = "1234567890123456";
         CreditCardModel mockCreditCardModel = mock(CreditCardModel.class);
 
         // Configurar el comportamiento del mock para devolver un mock de CreditCardModel
@@ -40,5 +40,5 @@ public class CreditCardImplTest {
         verify(creditCardDao, times(1)).update(any(CreditCardModel.class));
     }
 
-    // Agregar más pruebas para otros métodos relacionados con la cancelación de tarjetas...
+
 }
