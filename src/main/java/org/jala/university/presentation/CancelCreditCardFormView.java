@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.UUID;
 
 import org.jala.university.Services.CreditCardModule;
+import org.jala.university.utilities.Dialog;
 
 public class CancelCreditCardFormView extends JDialog {
     private final CreditCardModule creditCardModule;
@@ -42,11 +43,11 @@ public class CancelCreditCardFormView extends JDialog {
                 try {
                     creditCardModule.cancelCreditCardByNumber(cardNumber);
 
-                    JOptionPane.showMessageDialog(null, "Credit card successfully canceled.");
+                    Dialog.getInformation("Credit card successfully canceled.");
                 } catch (Exception ex) {
 
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error canceling credit card: " + ex.getMessage());
+                    Dialog.error("Error canceling credit card: ");
                 }
 
 
