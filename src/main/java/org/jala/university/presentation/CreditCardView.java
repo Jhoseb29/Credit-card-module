@@ -50,7 +50,7 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
@@ -117,6 +117,13 @@ public class CreditCardView extends JFrame {
       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
       entityManager = entityManagerFactory.createEntityManager();
       EntityTransaction transaction = entityManager.getTransaction();
+//      try{
+//        int creditCard = new CreditCardImpl(new CreditCardDao(entityManager)).checkCard();
+//        System.out.println("VALOR: " + creditCard);
+//      }catch (Exception e){
+//        System.out.println("FALLO EL QUERY");
+//      };
+
       try {
         transaction.begin();
         FormModule formModule = new FormImpl(new FormDao(entityManager));
