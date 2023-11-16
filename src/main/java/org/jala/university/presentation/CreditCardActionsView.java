@@ -1,8 +1,10 @@
 package org.jala.university.presentation;
 
+import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
 import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.utilities.Dialog;
+import org.jala.university.utilities.Validator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +12,14 @@ import java.awt.*;
 public class CreditCardActionsView extends JFrame {
     private final ControllerCreditCard controllerRecordCard;
     private final RecordImpl record;
+    private final CreditCardModel creditCardModel;
     private JPanel topPanel;
     private JPanel btnPanel;
 
-    public CreditCardActionsView(ControllerCreditCard controllerRecordCard, RecordImpl record) {
+    public CreditCardActionsView(ControllerCreditCard controllerRecordCard, RecordImpl record, CreditCardModel creditCardModel) {
         this.controllerRecordCard = controllerRecordCard;
         this.record = record;
+        this.creditCardModel = creditCardModel;
         setTitle("Credit Card Actions");
         setSize(800, 500);
         setBackground(Color.gray);
@@ -98,11 +102,12 @@ public class CreditCardActionsView extends JFrame {
 
         });
         withdrawCashButton.addActionListener(event->{
+            int currentBalance = (int) creditCardModel.getCurrent_limit();
             String mountStr = JOptionPane.showInputDialog(this, "Enter the mount");
             if (mountStr != null && !mountStr.isEmpty()){
                 try {
                     int mount = Integer.parseInt(mountStr);
-                    if (mount > 0 ){
+                    if (Validator.isValidWithdrawal(mount, currentBalance)){
                         int balance = controllerRecordCard.withdrawCash(mount);
                         Dialog.getInformation("Successful Retirement" + balance);
                     }

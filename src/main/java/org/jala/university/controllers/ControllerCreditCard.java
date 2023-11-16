@@ -6,6 +6,7 @@ import org.jala.university.model.RecordModel;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
 import org.jala.university.utilities.EnumOperations;
+import org.jala.university.utilities.Validator;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -48,12 +49,16 @@ public class ControllerCreditCard {
 
     public int withdrawCash(int mount) {
         int currentBalance = (int) creditCardModel.getCurrent_limit();
-        currentBalance -= (int) (mount * 0.05);
+        if (!Validator.isValidWithdrawal(mount, currentBalance)) {
+            System.out.println("Invalid withdrawal amount. Please check your balance.");
+            return currentBalance;
+        }
+        int desc = (int) (mount - mount * 0.05);
+        currentBalance -= desc;
         creditCardModel.setCurrent_limit(currentBalance);
-        logAction(EnumOperations.WITHDRAW_CASH.getOperationsName() + currentBalance);
+        logAction(EnumOperations.WITHDRAW_CASH.getOperationsName() + mount);
         creditCardModule.update(creditCardModel);
         commitTransaction();
-
         return currentBalance;
     }
     private void logAction(String action){

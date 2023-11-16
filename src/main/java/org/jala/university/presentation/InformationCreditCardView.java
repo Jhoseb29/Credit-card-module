@@ -91,7 +91,7 @@ public class InformationCreditCardView {
         btnActionsCard.addActionListener(event -> {
             // Crear una instancia de CreditCardActionsView
 
-            CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record);
+            CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record, creditCardModel);
 
             // Hacer visible la nueva vista
             creditCardActionsView.setVisible(true);

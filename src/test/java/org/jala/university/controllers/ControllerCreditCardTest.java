@@ -33,12 +33,16 @@ public class ControllerCreditCardTest {
     @Test
     @Transactional
     void withdrawCashTest(){
-        int balance = 2000;  // tu puedes poner tu saldo actual
+        int balance = 3000;  // tu puedes poner tu saldo actual
         creditCardModel.setCurrent_limit(balance);
         int currentBalance = (int) creditCardModel.getCurrent_limit();
-        int mount = 100; // tu puedes poner el monto que deseas retirar
+        int mount = 4000; // tu puedes poner el monto que deseas retirar
+        int desc = (int) (mount - mount * 0.05);
         controllerCreditCard.withdrawCash(mount);
-        int expectedBalance = (int) (currentBalance - mount * 0.05);
+        int expectedBalance = currentBalance - desc;
         assertEquals(expectedBalance, creditCardModel.getCurrent_limit());
+        System.out.println(expectedBalance);
+        System.out.println(creditCardModel.getCurrent_limit());
+
     }
 }
