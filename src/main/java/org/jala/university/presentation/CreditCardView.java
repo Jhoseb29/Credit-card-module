@@ -12,6 +12,7 @@ import org.jala.university.model.RecordModel;
 import org.jala.university.services.*;
 import org.jala.university.controllers.ControllerRecordCard;
 import org.jala.university.model.FormModel;
+import org.jala.university.utilities.CreditCardUtilities;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.Validator;
 
@@ -135,6 +136,8 @@ public class CreditCardView extends JFrame {
                 .credit_limit(creditLimit)
                 .current_limit(creditLimit)
                 .NIP(generateRandomPIN())
+                .card(CreditCardUtilities.generateCreditCardBin())
+                .cvv(CreditCardUtilities.generateCreditCardCVV())
                 .status(1)
                 .expiration_year(expirationYear)
                 .expiration_month(expirationMonth)
