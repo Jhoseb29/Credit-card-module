@@ -12,10 +12,10 @@ public class ValidatorTest {
     assertTrue(Validator.isValidEmail("user123@gmail.com"));
     assertFalse(Validator.isValidEmail("invalid-email"));
     assertFalse(Validator.isValidEmail("user@domain"));
-    assertFalse(Validator.isValidEmail(null)); // Agregar prueba para null
-    assertFalse(Validator.isValidEmail("")); // Agregar prueba para cadena vacía
-    assertFalse(Validator.isValidEmail("test@.com")); // Agregar prueba para dominio inválido
-    assertFalse(Validator.isValidEmail("test@com.")); // Agregar prueba para dominio inválido
+    assertFalse(Validator.isValidEmail(null));
+    assertFalse(Validator.isValidEmail(""));
+    assertFalse(Validator.isValidEmail("test@.com"));
+    assertFalse(Validator.isValidEmail("test@com."));
   }
 
   @Test
@@ -24,7 +24,7 @@ public class ValidatorTest {
     assertTrue(Validator.isValidIncome(1000));
     assertFalse(Validator.isValidIncome(200));
     assertFalse(Validator.isValidIncome(0));
-    assertFalse(Validator.isValidIncome(-100)); // Agregar prueba para ingreso negativo
+    assertFalse(Validator.isValidIncome(-100));
   }
 
   @Test
