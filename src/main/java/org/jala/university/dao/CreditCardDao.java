@@ -1,7 +1,6 @@
 package org.jala.university.dao;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.TypedQuery;
 import org.jala.university.model.CreditCardModel;
@@ -14,8 +13,8 @@ import java.util.UUID;
 
 public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
 
-    public CreditCardDao(Class<UUID> idClazz, Class<CreditCardModel> clazzToSet, EntityManager entityManager) {
-        super(idClazz, clazzToSet, entityManager);
+    public CreditCardDao(EntityManager entityManager) {
+        super(UUID.class, CreditCardModel.class, entityManager);
     }
 
     @Transactional

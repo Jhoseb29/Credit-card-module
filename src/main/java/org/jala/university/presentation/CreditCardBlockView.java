@@ -14,7 +14,7 @@ public class CreditCardBlockView extends JFrame {
   private JTextField cardNumberField;
   private JTextArea resultArea;
 
-  public CreditCardBlockView(CreditCardModule creditCardModule) {
+  public CreditCardBlockView() {
     creditCards = new HashMap<>();
 
     setTitle("Credit Card Management");
@@ -54,11 +54,10 @@ public class CreditCardBlockView extends JFrame {
         String cardNumber = cardNumberField.getText();
         if (creditCards.containsKey(cardNumber)) {
           creditCards.put(cardNumber, true);
-          resultArea.setText("Card blocked.");
+          resultArea.setText("Card doesn't exist.");
 
           // Crear y mostrar el formulario de cancelación, pasando el CreditCardModule
-          CancelCreditCardFormView cancelForm = new CancelCreditCardFormView(creditCardModule, cardNumber);
-          cancelForm.setVisible(true);
+          CancelCreditCardFormView cancelForm;
         } else {
           resultArea.setText("Card not found.");
         }

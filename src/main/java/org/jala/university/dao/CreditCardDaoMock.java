@@ -9,7 +9,7 @@ import java.util.UUID;
 public class CreditCardDaoMock extends CreditCardDao {
     private final Map<UUID, CreditCardModel> cardFormMap = new HashMap<>();
     public CreditCardDaoMock() {
-        super(UUID.class, CreditCardModel.class, null);
+        super(null);
     }
     @Override
     public CreditCardModel findOne(UUID ruleGroupId) {

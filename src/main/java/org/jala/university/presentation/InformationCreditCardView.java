@@ -76,7 +76,7 @@ public class InformationCreditCardView {
 
         btnCardManagement.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CreditCardBlockView cardManagent = new CreditCardBlockView(creditCardModule);
+                CreditCardBlockView cardManagent = new CreditCardBlockView();
                 cardManagent.setVisible(true);
             }
         });
