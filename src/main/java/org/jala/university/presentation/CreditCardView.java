@@ -10,7 +10,7 @@ import org.jala.university.dao.RecordDao;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 import org.jala.university.services.*;
-import org.jala.university.controllers.ControllerRecordCard;
+import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.model.FormModel;
 import org.jala.university.utilities.CreditCardUtilities;
 import org.jala.university.utilities.Dialog;
@@ -51,7 +51,7 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
@@ -147,7 +147,7 @@ public class CreditCardView extends JFrame {
         transaction.commit();
         clearFormFields();
         RecordImpl record = new RecordImpl(new RecordDao(UUID.class, RecordModel.class, entityManager));
-        ControllerRecordCard controllerRecordCard = new ControllerRecordCard(creditCardModel, entityManager, creditCardTableModule, record );
+        ControllerCreditCard controllerRecordCard = new ControllerCreditCard(creditCardModel, entityManager, creditCardTableModule, record );
         SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardModel, controllerRecordCard, record));
 
       }

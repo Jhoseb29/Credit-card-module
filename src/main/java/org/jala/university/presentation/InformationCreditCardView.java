@@ -2,7 +2,7 @@ package org.jala.university.presentation;
 
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
-import org.jala.university.controllers.ControllerRecordCard;
+import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.PaneCard;
 
@@ -16,15 +16,14 @@ import static java.awt.Font.*;
 public class InformationCreditCardView {
     private JFrame frame;
     private final CreditCardModel creditCardModel;
-    private ControllerRecordCard controllerRecordCard; // Agregado
+    private ControllerCreditCard controllerCreditCard; // Agregado
     private RecordImpl record; // Agregado
 
-
-    public InformationCreditCardView(CreditCardModel creditCardModel, ControllerRecordCard controllerRecordCard, RecordImpl record) {
+    public InformationCreditCardView(CreditCardModel creditCardModel, ControllerCreditCard controllerRecordCard, RecordImpl record) {
         int WIDTH_BUTTON = 130;
         int HEIGHT_BUTTON = 30;
         this.creditCardModel = creditCardModel;
-        this.controllerRecordCard = controllerRecordCard; // Agregado
+        this.controllerCreditCard = controllerRecordCard; // Agregado
         this.record = record; // Agregado
 
         frame = new JFrame("Credit Card");
