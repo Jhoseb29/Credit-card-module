@@ -1,8 +1,12 @@
 package org.jala.university.presentation;
+import jakarta.persistence.Query;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static org.jala.university.utilities.Querys.validateCreditCard;
 
 
 public class InterfazView extends  JFrame {
@@ -26,8 +30,14 @@ public class InterfazView extends  JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CreditCardView creditCardFormUI = new CreditCardView();
-                creditCardFormUI.setVisible(true);
+                System.out.println("DENTRO DEL BOTON: " + validateCreditCard().getSingleResult());
+                String value = (String) validateCreditCard().getSingleResult();
+                if (value.equals(0) ){
+                    CreditCardView creditCardFormUI = new CreditCardView();
+                    creditCardFormUI.setVisible(true);
+                    System.out.println("ENTRO EN EL IF");
+                }else{ }
+
             }
         });
     }
