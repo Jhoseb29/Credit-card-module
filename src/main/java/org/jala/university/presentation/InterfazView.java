@@ -31,8 +31,8 @@ public class InterfazView extends  JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 System.out.println("DENTRO DEL BOTON: " + validateCreditCard().getSingleResult());
-                String value = (String) validateCreditCard().getSingleResult();
-                if (value.equals(0) ){
+
+                if (((int) validateCreditCard().getResultList().get(0)) == 0 ){
                     CreditCardView creditCardFormUI = new CreditCardView();
                     creditCardFormUI.setVisible(true);
                     System.out.println("ENTRO EN EL IF");

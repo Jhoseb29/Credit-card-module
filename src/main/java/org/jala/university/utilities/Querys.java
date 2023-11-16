@@ -11,5 +11,6 @@ public class Querys {
         EntityManager em = entityManagerFactory.createEntityManager();
         String sql = "SELECT COUNT(*) FROM credit_card";
         return em.createQuery(sql);
+        //return (int) em.createQuery(sql).getSingleResult();
     }
 }

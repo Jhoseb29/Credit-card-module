@@ -21,7 +21,7 @@ public class main {
         SwingUtilities.invokeLater(() -> {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
             InterfazView interfazUI = new InterfazView();
-            System.out.println("NUMERO DE TARJETAS DE CREDITO CREADAS: " + validateCreditCard().getSingleResult());
+            System.out.println("NUMERO DE TARJETAS DE CREDITO CREADAS: " + validateCreditCard().getResultList().get(0));
 
         });
     }
