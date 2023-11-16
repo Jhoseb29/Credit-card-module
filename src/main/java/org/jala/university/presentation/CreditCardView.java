@@ -117,12 +117,6 @@ public class CreditCardView extends JFrame {
       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
       entityManager = entityManagerFactory.createEntityManager();
       EntityTransaction transaction = entityManager.getTransaction();
-//      try{
-//        int creditCard = new CreditCardImpl(new CreditCardDao(entityManager)).checkCard();
-//        System.out.println("VALOR: " + creditCard);
-//      }catch (Exception e){
-//        System.out.println("FALLO EL QUERY");
-//      };
 
       try {
         transaction.begin();
