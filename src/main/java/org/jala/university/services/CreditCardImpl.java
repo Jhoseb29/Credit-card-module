@@ -1,4 +1,4 @@
-package org.jala.university.Services;
+package org.jala.university.services;
 
 import org.jala.university.dao.CreditCardDao;
 import org.jala.university.model.CreditCardModel;

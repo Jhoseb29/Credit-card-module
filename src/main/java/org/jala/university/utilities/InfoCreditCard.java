@@ -2,7 +2,7 @@ package org.jala.university.utilities;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.jala.university.Services.CreditCardModule;
+import org.jala.university.services.CreditCardModule;
 import org.jala.university.model.FormModel;
 import org.jala.university.model.CreditCardModel;
 

@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import org.jala.university.Services.FormImpl;
+import org.jala.university.services.FormImpl;
 import org.jala.university.dao.FormDao;
 import org.jala.university.services.FormModule;
 import javax.swing.SwingUtilities;

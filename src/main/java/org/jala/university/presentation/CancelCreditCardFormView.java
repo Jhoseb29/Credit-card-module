@@ -6,9 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
 
-import org.jala.university.Services.CreditCardModule;
+import org.jala.university.services.CreditCardModule;
 import org.jala.university.utilities.Dialog;
 
 public class CancelCreditCardFormView extends JDialog {
