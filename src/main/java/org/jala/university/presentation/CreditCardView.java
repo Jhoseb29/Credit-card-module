@@ -1,14 +1,17 @@
 package org.jala.university.presentation;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.jala.university.dao.CreditCardDao;
+import org.jala.university.dao.FormDao;
+import org.jala.university.dao.RecordDao;
 import org.jala.university.model.CreditCardModel;
-import org.jala.university.utilities.InfoCreditCard;
-import org.jala.university.services.CreditCardImpl;
-import org.jala.university.services.CreditCardModule;
+import org.jala.university.model.RecordModel;
+import org.jala.university.services.*;
+import org.jala.university.controllers.ControllerRecordCard;
 import org.jala.university.model.FormModel;
-import org.jala.university.services.FormModule;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.Validator;
 
@@ -17,23 +20,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 public class CreditCardView extends JFrame {
-
-  private final FormModule creditCardModule;
   private final JPanel topPanel;
   private final JPanel btnPanel;
-  private final EntityManager entityManager;
+  private  EntityManager entityManager;
   Map<String, JTextField> inputFields = new HashMap<>();
 
-  public CreditCardView(FormModule creditCardModule, EntityManager entityManager) {
-    this.creditCardModule = creditCardModule;
-    this.entityManager = entityManager;
+  public CreditCardView() {
     setTitle("Credit Card Form");
     setSize(400, 300);
     setResizable(false);
@@ -109,32 +105,68 @@ public class CreditCardView extends JFrame {
       Dialog.getInformation("Formulario aceptado. ¡Gracias por enviar su solicitud!");
 
 
-      FormModel creditCardForm = FormModel.builder()
-              .address(address)
-              .phoneNumber(phoneNumber)
-              .income(income)
-              .birthdate(birthdate)
-              .email(email)
-              .aplicationDate(applicationDate)
-              .build();
+      FormModel formModel = FormModel.builder()
+          .address(address)
+          .phoneNumber(phoneNumber)
+          .income(income)
+          .birthdate(birthdate)
+          .email(email)
+          .aplicationDate(applicationDate)
+          .build();
+
+      EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
+      entityManager = entityManagerFactory.createEntityManager();
       EntityTransaction transaction = entityManager.getTransaction();
-      transaction.begin();
-      creditCardModule.create(creditCardForm);
-      transaction.commit();
-      clearFormFields();
-      CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(UUID.class, CreditCardModel.class, entityManager));
-      InfoCreditCard infoCreditCard = new InfoCreditCard(creditCardTableModule, entityManager, creditCardForm);
-      UUID cardId = infoCreditCard.generateCreditCardData();
-      dispose();
-      SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardTableModule, cardId, creditCardForm));
+      try {
+        transaction.begin();
+        FormModule formModule = new FormImpl(new FormDao(entityManager));
+        formModule.create(formModel);
+        double creditLimit = income * 1.5;
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.YEAR, 4);
+        int expirationMonth = calendar.get(Calendar.MONTH) + 1;
+        int expirationYear = calendar.get(Calendar.YEAR);
+        CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(entityManager));
+        CreditCardModel creditCardModel = CreditCardModel.builder()
+                .formModel(formModel)
+                .approved_card(true)
+                .credit_limit(creditLimit)
+                .current_limit(creditLimit)
+                .NIP(generateRandomPIN())
+                .status(1)
+                .expiration_year(expirationYear)
+                .expiration_month(expirationMonth)
+                .records(new ArrayList<>())
+                .build();
+        creditCardTableModule.create(creditCardModel);
+        transaction.commit();
+        clearFormFields();
+        RecordImpl record = new RecordImpl(new RecordDao(UUID.class, RecordModel.class, entityManager));
+        ControllerRecordCard controllerRecordCard = new ControllerRecordCard(creditCardModel, entityManager, creditCardTableModule, record );
+        SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardModel, controllerRecordCard, record));
+
+      }
+      catch (Exception e) {
+        if (transaction.isActive()) {
+          transaction.rollback();
+        }
+        e.printStackTrace();
+
+      }
 
 
     });
   }
-
   private void clearFormFields() {
     for (JTextField textField : inputFields.values()) {
       textField.setText("");
     }
+  }
+  private int generateRandomPIN() {
+    Random random = new Random();
+    int pin = 1000 + random.nextInt(9000);
+    return pin;
   }
 }

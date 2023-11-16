@@ -19,6 +19,7 @@ public class CreditCardImpl implements CreditCardModule {
         creditCardDao.create(creditCard);
 
     }
+
     @Override
     public CreditCardModel get(UUID id) {
         return creditCardDao.findOne(id);

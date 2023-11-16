@@ -1,26 +1,26 @@
 package org.jala.university.presentation;
 
-import org.jala.university.services.CreditCardModule;
-import org.jala.university.model.FormModel;
+import org.jala.university.model.CreditCardModel;
+import org.jala.university.services.RecordImpl;
+import org.jala.university.controllers.ControllerRecordCard;
 import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
 
 public class InformationCreditCardView {
     private JFrame frame;
-    private final CreditCardModule creditCardModule;
-    private final UUID cardId;
-    private final FormModel creditCardForm;
+    private final CreditCardModel creditCardModel;
+    private ControllerRecordCard controllerRecordCard; // Agregado
+    private RecordImpl record; // Agregado
 
 
-    public InformationCreditCardView(CreditCardModule creditCardModule, UUID cardId, FormModel creditCardForm) {
-        this.creditCardModule = creditCardModule;
-        this.cardId = cardId;
-        this.creditCardForm = creditCardForm;
+    public InformationCreditCardView(CreditCardModel creditCardModel, ControllerRecordCard controllerRecordCard, RecordImpl record) {
+        this.creditCardModel = creditCardModel;
+        this.controllerRecordCard = controllerRecordCard; // Agregado
+        this.record = record; // Agregado
 
         frame = new JFrame("Credit Card");
         frame.setLocationRelativeTo(null);
@@ -33,43 +33,44 @@ public class InformationCreditCardView {
         JButton btnBalanceLimit = new JButton("See Balance Limit");
         JButton btnExpirationDate = new JButton("See Expiration Date");
         JButton btnCardManagement = new JButton("Card management");
+        JButton btnGeneratePin = new JButton("PIN");
+        JButton btnActionsCard = new JButton("ACTIONS CARD");
 
         frame.add(btnStatus);
         frame.add(btnBalance);
         frame.add(btnBalanceLimit);
         frame.add(btnExpirationDate);
         frame.add(btnCardManagement);
+        frame.add(btnGeneratePin);
+        frame.add(btnActionsCard);
 
 
         btnStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String status = creditCardModule.getAccountStatus(cardId);
+                String status = String.valueOf(creditCardModel.getStatus());
                 Dialog.getInformation("Status:" + status);
             }
         });
 
         btnBalance.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float balance = creditCardModule.getCurrentLimit(cardId);
+                float balance = (float) creditCardModel.getCurrent_limit();
                Dialog.getInformation("Balance: " + balance);
             }
         });
 
         btnBalanceLimit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float creditLimit = creditCardModule.getCredit_limit(cardId, creditCardForm.getIncome());
+                float creditLimit = (float) creditCardModel.getCredit_limit();
                 Dialog.getInformation("Credit Limit: " + creditLimit);
             }
         });
 
         btnExpirationDate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String expirationDate = creditCardModule.getExpirationDate(cardId);
-                if (!expirationDate.equals("Expiration date not available")) {
-                    Dialog.getInformation("Expiration Date: " + expirationDate);
-                } else {
-                    Dialog.getInformation("Expiration date not available");
-                }
+                int expirationMonth = creditCardModel.getExpiration_month();
+                int expirationYear = creditCardModel.getExpiration_year();
+                Dialog.getInformation("Expiration Date: " + expirationMonth + "/" + expirationYear);
             }
         });
 
@@ -78,6 +79,23 @@ public class InformationCreditCardView {
                 CreditCardBlockView cardManagent = new CreditCardBlockView(creditCardModule);
                 cardManagent.setVisible(true);
             }
+        });
+
+        btnGeneratePin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RandomPinGeneratorView pinGeneratorView = new RandomPinGeneratorView();
+                pinGeneratorView.setVisible(true);
+            }
+        });
+
+        btnActionsCard.addActionListener(event -> {
+            // Crear una instancia de CreditCardActionsView
+
+            CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record);
+
+            // Hacer visible la nueva vista
+            creditCardActionsView.setVisible(true);
         });
 
         frame.setVisible(true);
