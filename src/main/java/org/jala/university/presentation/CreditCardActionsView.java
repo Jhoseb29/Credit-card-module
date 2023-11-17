@@ -77,25 +77,31 @@ public class CreditCardActionsView extends JFrame {
                 }
             }
         });
-        makePayButton.addActionListener(event ->{
-            String mountStr = JOptionPane.showInputDialog(this, "Enter the mount: ");
-            if (mountStr != null && !mountStr.isEmpty()){
-                try {
-                    int mount = Integer.parseInt(mountStr);
-                    if (mount>0){
-                        int balance = controllerRecordCard.pay(mount);
-                        Dialog.getInformation("Successful payment."  + balance);
-                    }
-                    else {
-                        Dialog.error("Enter a validate mount.");
-                    }
-                }
-                catch (NumberFormatException numberFormatException){
-                    Dialog.error("Enter a valid numeric value for the mount");
 
+        makePayButton.addActionListener(event -> {
+            String inputAmount = JOptionPane.showInputDialog(this, "Enter the amount: ");
+
+            if (inputAmount != null && !inputAmount.isEmpty()) {
+                try {
+                    int paymentAmount = Integer.parseInt(inputAmount);
+
+                    if (paymentAmount > 0) {
+                        int balanceAfterPayment = controllerRecordCard.pay(paymentAmount);
+
+                        if (balanceAfterPayment >= 0) {
+                            Dialog.getInformation("Successful payment. New balance: " + balanceAfterPayment);
+                        } else {
+                            Dialog.error("Insufficient funds. Payment not processed.");
+                        }
+                    } else {
+                        Dialog.error("Enter a valid positive amount.");
+                    }
+                } catch (NumberFormatException e) {
+                    Dialog.error("Enter a valid numeric value for the amount");
                 }
             }
         });
+
         showHistoryButton.addActionListener(event->{
             RecordView recordView = new RecordView(record);
             recordView.setVisible(true);
