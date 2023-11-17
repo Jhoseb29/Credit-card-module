@@ -1,23 +1,27 @@
 package org.jala.university.presentation;
 
+import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
-import org.jala.university.controllers.ControllerRecordCard;
+import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.utilities.Dialog;
+import org.jala.university.utilities.Validator;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CreditCardActionsView extends JFrame {
-    private final ControllerRecordCard controllerRecordCard;
+    private final ControllerCreditCard controllerRecordCard;
     private final RecordImpl record;
+    private final CreditCardModel creditCardModel;
     private JPanel topPanel;
     private JPanel btnPanel;
 
-    public CreditCardActionsView(ControllerRecordCard controllerRecordCard, RecordImpl record) {
+    public CreditCardActionsView(ControllerCreditCard controllerRecordCard, RecordImpl record, CreditCardModel creditCardModel) {
         this.controllerRecordCard = controllerRecordCard;
         this.record = record;
+        this.creditCardModel = creditCardModel;
         setTitle("Credit Card Actions");
-        setSize(500, 500);
+        setSize(800, 500);
         setBackground(Color.gray);
         setLocationRelativeTo(null);
 
@@ -31,11 +35,13 @@ public class CreditCardActionsView extends JFrame {
         JButton updatePinButton = new JButton("UPDATE PIN");
         JButton makePayButton = new JButton("PAY");
         JButton showHistoryButton = new JButton("SHOW HISTORY");
+        JButton withdrawCashButton = new JButton("WITHDRAW CASH");
 
         btnPanel.add(updateStatusButton);
         btnPanel.add(updatePinButton);
         btnPanel.add(makePayButton);
         btnPanel.add(showHistoryButton);
+        btnPanel.add(withdrawCashButton);
 
         updateStatusButton.addActionListener(event -> {
             String [] statusOptions = {"Active", "Inactive"};
@@ -93,6 +99,26 @@ public class CreditCardActionsView extends JFrame {
         showHistoryButton.addActionListener(event->{
             RecordView recordView = new RecordView(record);
             recordView.setVisible(true);
+
+        });
+        withdrawCashButton.addActionListener(event->{
+            int currentBalance = (int) creditCardModel.getCurrent_limit();
+            String mountStr = JOptionPane.showInputDialog(this, "Enter the mount");
+            if (mountStr != null && !mountStr.isEmpty()){
+                try {
+                    int mount = Integer.parseInt(mountStr);
+                    if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus())){
+                        int balance = controllerRecordCard.withdrawCash(mount);
+                        Dialog.getInformation("Successful Retirement " + balance);
+                    }
+                    else {
+                        Dialog.error("Enter a valid numeric value for the mount or review the status of the card.");
+                    }
+                }
+                catch (NumberFormatException numberFormatException){
+                    Dialog.error("Enter a valid numeric value for the mount");
+                }
+            }
 
         });
 

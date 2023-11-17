@@ -1,7 +1,6 @@
 package org.jala.university.services;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.jala.university.dao.RecordDao;
 import org.jala.university.model.RecordModel;
