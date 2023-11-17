@@ -34,3 +34,4 @@ public class RecordModel implements EntityDAO<UUID> {
     @JoinColumn(name = "creditCardId")
     private CreditCardModel creditCard;
 }
+
