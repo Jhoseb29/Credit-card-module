@@ -59,7 +59,7 @@ public class Validator {
 
     return false; // Si no coincide con ninguno de los formatos o la edad no es válida, es inválida
   }
-  public static boolean isValidWithdrawal(int withdrawalAmount, int currentBalance) {
-    return withdrawalAmount > 0 && withdrawalAmount <= currentBalance;
+  public static boolean isValidWithdrawal(int withdrawalAmount, int currentBalance, int statusCard) {
+    return withdrawalAmount > 0 && withdrawalAmount <= currentBalance && statusCard == 1;
   }
 }

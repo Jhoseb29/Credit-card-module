@@ -49,12 +49,17 @@ public class ControllerCreditCard {
 
     public int withdrawCash(int mount) {
         int currentBalance = (int) creditCardModel.getCurrent_limit();
-        if (!Validator.isValidWithdrawal(mount, currentBalance)) {
-            System.out.println("Invalid withdrawal amount. Please check your balance.");
+        int statusCard = creditCardModel.getStatus();
+        if (!Validator.isValidWithdrawal(mount, currentBalance, statusCard)) {
+            System.out.println("Invalid withdrawal amount. Please check your balance or review the status of the card");
             return currentBalance;
         }
-        int desc = (int) (mount - mount * 0.05);
-        currentBalance -= desc;
+        int desc = (int) (mount * 0.05);
+        if (desc >= currentBalance) {
+            System.out.println("Insufficient funds. Please check your balance.");
+            return currentBalance;
+        }
+        currentBalance -= mount + desc;
         creditCardModel.setCurrent_limit(currentBalance);
         logAction(EnumOperations.WITHDRAW_CASH.getOperationsName() + mount);
         creditCardModule.update(creditCardModel);

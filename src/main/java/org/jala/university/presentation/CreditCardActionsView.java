@@ -107,12 +107,12 @@ public class CreditCardActionsView extends JFrame {
             if (mountStr != null && !mountStr.isEmpty()){
                 try {
                     int mount = Integer.parseInt(mountStr);
-                    if (Validator.isValidWithdrawal(mount, currentBalance)){
+                    if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus())){
                         int balance = controllerRecordCard.withdrawCash(mount);
-                        Dialog.getInformation("Successful Retirement" + balance);
+                        Dialog.getInformation("Successful Retirement " + balance);
                     }
                     else {
-                        Dialog.error("Enter a valid numeric value for the mount");
+                        Dialog.error("Enter a valid numeric value for the mount or review the status of the card.");
                     }
                 }
                 catch (NumberFormatException numberFormatException){
