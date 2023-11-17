@@ -3,10 +3,12 @@ package org.jala.university.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.jala.university.model.CreditCardModel;
+import org.jala.university.model.RecordModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
@@ -53,6 +55,11 @@ public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
             return dateFormat.format(calendar.getTime());
         }
         return "Expiration date not available";
+    }
+    @Transactional
+    public List<CreditCardModel> findAll() {
+        return entityManager.createQuery("SELECT r FROM credit_card r", CreditCardModel.class)
+                .getResultList();
     }
 
 
