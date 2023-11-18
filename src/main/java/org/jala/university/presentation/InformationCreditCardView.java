@@ -14,109 +14,122 @@ import java.awt.event.ActionListener;
 import static java.awt.Font.*;
 
 public class InformationCreditCardView {
-    private JFrame frame;
-    private final CreditCardModel creditCardModel;
-    private ControllerCreditCard controllerCreditCard; // Agregado
-    private RecordImpl record; // Agregado
 
-    public InformationCreditCardView(CreditCardModel creditCardModel, ControllerCreditCard controllerRecordCard, RecordImpl record) {
-        int WIDTH_BUTTON = 130;
-        int HEIGHT_BUTTON = 30;
-        this.creditCardModel = creditCardModel;
-        this.controllerCreditCard = controllerRecordCard; // Agregado
-        this.record = record; // Agregado
+  private JFrame frame;
+  private final CreditCardModel creditCardModel;
+  private ControllerCreditCard controllerCreditCard;
+  private RecordImpl record;
 
-        frame = new JFrame("Credit Card");
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setLayout(null);
+  public InformationCreditCardView(CreditCardModel creditCardModel,
+      ControllerCreditCard controllerRecordCard, RecordImpl record) {
+    int WIDTH_BUTTON = 130;
+    int HEIGHT_BUTTON = 30;
+    this.creditCardModel = creditCardModel;
+    this.controllerCreditCard = controllerRecordCard;
+    this.record = record;
 
-        JButton btnStatus = new JButton("See Status"); btnStatus.setBounds(20,293,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnBalance = new JButton("See Balance"); btnBalance.setBounds(185,293,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnBalanceLimit = new JButton("See Balance Limit"); btnBalanceLimit.setBounds(350,293,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnCardManagement = new JButton("Card management"); btnCardManagement.setBounds(20,344,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnGeneratePin = new JButton("PIN"); btnGeneratePin.setBounds(185,344,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnActionsCard = new JButton("ACTIONS CARD"); btnActionsCard.setBounds(350,344,WIDTH_BUTTON,HEIGHT_BUTTON);
+    frame = new JFrame("Credit Card");
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(500, 500);
+    frame.setLayout(null);
 
-        frame.add(btnStatus);
-        frame.add(btnBalance);
-        frame.add(btnBalanceLimit);
-        frame.add(btnCardManagement);
-        frame.add(btnGeneratePin);
-        frame.add(btnActionsCard);
+    JButton btnStatus = new JButton("See Status");
+    btnStatus.setBounds(20, 293, WIDTH_BUTTON, HEIGHT_BUTTON);
+    JButton btnBalance = new JButton("See Balance");
+    btnBalance.setBounds(185, 293, WIDTH_BUTTON, HEIGHT_BUTTON);
+    JButton btnBalanceLimit = new JButton("See Balance Limit");
+    btnBalanceLimit.setBounds(350, 293, WIDTH_BUTTON, HEIGHT_BUTTON);
+    JButton btnCardManagement = new JButton("Card management");
+    btnCardManagement.setBounds(20, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
+    JButton btnGeneratePin = new JButton("PIN");
+    btnGeneratePin.setBounds(185, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
+    JButton btnActionsCard = new JButton("Actions Card");
+    btnActionsCard.setBounds(350, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
 
-        PaneCard frontPanel = new PaneCard(new Color(0x666f7f),new Color(0x262d3d),new Color(0x262d3d)); frontPanel.setBounds(10,10,380,180);
-        PaneCard backPanel = new PaneCard(new Color(0xe8e6e6),new Color(0xd7d7d7),new Color(0xD7D7D7)); backPanel.setBounds(100,40,380,180);
-        showData(frontPanel,backPanel);
-        frame.add(frontPanel);
-        frame.add(backPanel);
+    frame.add(btnStatus);
+    frame.add(btnBalance);
+    frame.add(btnBalanceLimit);
+    frame.add(btnCardManagement);
+    frame.add(btnGeneratePin);
+    frame.add(btnActionsCard);
 
-        btnStatus.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String status = String.valueOf(creditCardModel.getStatus());
-                Dialog.getInformation("Status:" + status);
-            }
-        });
+    PaneCard frontPanel = new PaneCard(new Color(0x666f7f), new Color(0x262d3d),
+        new Color(0x262d3d));
+    frontPanel.setBounds(10, 10, 380, 180);
+    PaneCard backPanel = new PaneCard(new Color(0xe8e6e6), new Color(0xd7d7d7),
+        new Color(0xD7D7D7));
+    backPanel.setBounds(100, 40, 380, 180);
+    showData(frontPanel, backPanel);
+    frame.add(frontPanel);
+    frame.add(backPanel);
 
-        btnBalance.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                float balance = (float) creditCardModel.getCurrent_limit();
-               Dialog.getInformation("Balance: " + balance);
-            }
-        });
+    btnStatus.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        String status = String.valueOf(creditCardModel.getStatus());
+        Dialog.getInformation("Status:" + status);
+      }
+    });
 
-        btnBalanceLimit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                float creditLimit = (float) creditCardModel.getCredit_limit();
-                Dialog.getInformation("Credit Limit: " + creditLimit);
-            }
-        });
+    btnBalance.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        float balance = (float) creditCardModel.getCurrent_limit();
+        Dialog.getInformation("Balance: " + balance);
+      }
+    });
 
-        btnCardManagement.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CreditCardBlockView cardManagent = new CreditCardBlockView();
-                cardManagent.setVisible(true);
-            }
-        });
+    btnBalanceLimit.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        float creditLimit = (float) creditCardModel.getCredit_limit();
+        Dialog.getInformation("Credit Limit: " + creditLimit);
+      }
+    });
 
-        btnGeneratePin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RandomPinGeneratorView pinGeneratorView = new RandomPinGeneratorView();
-                pinGeneratorView.setVisible(true);
-            }
-        });
+    btnCardManagement.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        CreditCardBlockView cardManagent = new CreditCardBlockView();
+        cardManagent.setVisible(true);
+      }
+    });
 
-        btnActionsCard.addActionListener(event -> {
-            // Crear una instancia de CreditCardActionsView
+    btnGeneratePin.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        RandomPinGeneratorView pinGeneratorView = new RandomPinGeneratorView();
+        pinGeneratorView.setVisible(true);
+      }
+    });
 
-            CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard, record, creditCardModel);
+    btnActionsCard.addActionListener(event -> {
+      CreditCardActionsView creditCardActionsView = new CreditCardActionsView(controllerRecordCard,
+          record, creditCardModel);
+      creditCardActionsView.setVisible(true);
+    });
 
-            // Hacer visible la nueva vista
-            creditCardActionsView.setVisible(true);
-        });
+    frame.setVisible(true);
+  }
 
-        frame.setVisible(true);
+  private void showData(PaneCard frontPanel, PaneCard backPanel) {
+    int expirationMonth = creditCardModel.getExpiration_month();
+    int expirationYear = creditCardModel.getExpiration_year();
+    String cardNumber = creditCardModel.getCard();
+    int cvvCard = creditCardModel.getCvv();
+
+    JLabel cardNumberLabel = new JLabel(cardNumber);
+    cardNumberLabel.setFont(new Font("Monospaced", ITALIC, 28));
+    JLabel expirationLabel = new JLabel(expirationMonth + "/" + expirationYear);
+    expirationLabel.setFont(new Font("Monospaced", BOLD, 18));
+    cardNumberLabel.setForeground(Color.WHITE);
+    expirationLabel.setForeground(Color.WHITE);
+    JLabel cvvCardLabel = new JLabel(String.valueOf(cvvCard));
+    cvvCardLabel.setFont(new Font("Monospaced", BOLD, 20));
+    frontPanel.add(new JLabel(""));
+    frontPanel.add(cardNumberLabel);
+    frontPanel.add(expirationLabel);
+
+    for (int i = 0; i < 14; i++) {
+      backPanel.add(new JLabel(""));
     }
-
-    private void showData(PaneCard frontPanel, PaneCard backPanel) {
-        int expirationMonth = creditCardModel.getExpiration_month();
-        int expirationYear = creditCardModel.getExpiration_year();
-        String cardNumber = creditCardModel.getCard();
-        int cvvCard = creditCardModel.getCvv();
-
-        JLabel cardNumberLabel = new JLabel(cardNumber); cardNumberLabel.setFont(new Font("Monospaced", ITALIC,28));
-        JLabel expirationLabel = new JLabel(expirationMonth +"/"+ expirationYear); expirationLabel.setFont(new Font("Monospaced", BOLD,18));
-        cardNumberLabel.setForeground(Color.WHITE); expirationLabel.setForeground(Color.WHITE);
-        JLabel cvvCardLabel = new JLabel(String.valueOf(cvvCard)); cvvCardLabel.setFont(new Font("Monospaced", BOLD,20));
-        frontPanel.add(new JLabel(""));
-        frontPanel.add(cardNumberLabel);
-        frontPanel.add(expirationLabel);
-
-        for (int i = 0; i < 14; i++) {
-            backPanel.add(new JLabel(""));
-        }
-        backPanel.add(cvvCardLabel);
-    }
+    backPanel.add(cvvCardLabel);
+  }
 }

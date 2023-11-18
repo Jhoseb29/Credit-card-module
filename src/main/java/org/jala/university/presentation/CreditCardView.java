@@ -51,7 +51,7 @@ public class CreditCardView extends JFrame {
       inputFields.put(labelName, jTextField);
       topPanel.add(jTextField);
     }
-    SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
+    //SpringUtilities.makeCompactGrid(topPanel, numPairs, 2, 6, 6, 6, 6);
     JButton submitButton = new JButton("SEND REQUEST");
     btnPanel.add(submitButton);
     submitButton.addActionListener(event -> {
@@ -156,17 +156,16 @@ public class CreditCardView extends JFrame {
           transaction.rollback();
         }
         e.printStackTrace();
-
       }
-
-
     });
   }
+
   private void clearFormFields() {
     for (JTextField textField : inputFields.values()) {
       textField.setText("");
     }
   }
+
   private int generateRandomPIN() {
     Random random = new Random();
     int pin = 1000 + random.nextInt(9000);
