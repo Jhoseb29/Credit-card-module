@@ -62,6 +62,21 @@ lint:
   script:
     - 'mvn $MAVEN_CLI_OPTS checkstyle:check --settings ci_settings.xml'
 
+# Ejecución de pruebas unitarias
+unit_test:
+  stage: test
+  script:
+    - 'mvn $MAVEN_CLI_OPTS test --settings ci_settings.xml'
+
+# Generación de informes de Code Coverage
+code_coverage:
+  stage: test
+  script:
+    - 'mvn $MAVEN_CLI_OPTS jacoco:prepare-agent test jacoco:report --settings ci_settings.xml'
+  artifacts:
+    paths:
+      - target/site/jacoco/
+
 build_test:
   stage: build
   script:
