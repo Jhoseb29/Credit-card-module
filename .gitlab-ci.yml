@@ -14,8 +14,9 @@
 # * Deploy built artifacts from master branch only.
 
 stages:
-  - test
   - build
+  - test
+  - package
   - deploy
 
 variables:
@@ -47,7 +48,6 @@ variables:
 image: maven:3-openjdk-17
 
 
-
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
 # Be aware that `mvn deploy` will install the built jar into this repository. If you notice your cache size
@@ -55,6 +55,14 @@ image: maven:3-openjdk-17
 cache:
   paths:
     - .m2/repository
+
+build_job:
+  stage: build
+  tags:
+    -docker
+  script:
+    - echo "Maven compile started"
+    - "mvn compile"
 
 # Ejecución de pruebas de análisis de código estático (linter).
 lint:
@@ -77,10 +85,7 @@ code_coverage:
     paths:
       - target/site/jacoco/
 
-build_test:
-  stage: build
-  script:
-    - echo "First test"
+
 
 # For merge requests do not `deploy` but only run `verify`.
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
