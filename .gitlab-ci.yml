@@ -41,6 +41,10 @@ variables:
 # See https://maven.apache.org/docs/3.8.1/release-notes.html#how-to-fix-when-i-get-a-http-repository-blocked for more.
 image: maven:3-openjdk-17
 
+stages:
+  -test
+  -build
+
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
 # Be aware that `mvn deploy` will install the built jar into this repository. If you notice your cache size
@@ -48,6 +52,11 @@ image: maven:3-openjdk-17
 cache:
   paths:
     - .m2/repository
+
+build_test:
+  stage: build
+  script:
+    - echo "First test"
 
 # For merge requests do not `deploy` but only run `verify`.
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
