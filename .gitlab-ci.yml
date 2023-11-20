@@ -16,7 +16,6 @@
 stages:
   - build
   - test
-  - package
   - deploy
 
 variables:
@@ -58,8 +57,6 @@ cache:
 
 build_job:
   stage: build
-  tags:
-    -docker
   script:
     - echo "Maven compile started"
     - "mvn compile"
