@@ -13,6 +13,11 @@
 # * Verify but don't deploy merge requests.
 # * Deploy built artifacts from master branch only.
 
+stages:
+  - test
+  - build
+  - deploy
+
 variables:
   # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
   MAVEN_OPTS: >-
@@ -41,9 +46,7 @@ variables:
 # See https://maven.apache.org/docs/3.8.1/release-notes.html#how-to-fix-when-i-get-a-http-repository-blocked for more.
 image: maven:3-openjdk-17
 
-stages:
-  -test
-  -build
+
 
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
