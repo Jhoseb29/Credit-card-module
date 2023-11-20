@@ -56,6 +56,12 @@ cache:
   paths:
     - .m2/repository
 
+# Ejecución de pruebas de análisis de código estático (linter).
+lint:
+  stage: test
+  script:
+    - 'mvn $MAVEN_CLI_OPTS checkstyle:check --settings ci_settings.xml'
+
 build_test:
   stage: build
   script:
