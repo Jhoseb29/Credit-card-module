@@ -9,6 +9,10 @@ import org.jala.university.services.CreditCardImpl;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import javax.swing.SwingUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
