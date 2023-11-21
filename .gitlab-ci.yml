@@ -61,6 +61,15 @@ build_job:
     - echo "Maven compile started"
     - "mvn compile"
 
+build_application:
+  stage: build
+  script:
+    - mvn package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
+
 # Ejecución de pruebas de análisis de código estático (linter).
 lint:
   stage: test
