@@ -8,6 +8,9 @@ import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,6 +46,34 @@ public class ControllerCreditCardTest {
         assertEquals(expectedBalance, currentBalance);
         System.out.println(expectedBalance);
         System.out.println(creditCardModel.getCurrent_limit());
+
+    }
+
+    @Test
+    void programarPagoAutomaticoTest_SufficientFunds() {
+        LocalDate fechaPago = LocalDate.now();
+        int initialBalance = 1000;
+        int paymentAmount = 500;
+
+        creditCardModel.setCurrent_limit(initialBalance);
+
+        controllerCreditCard.programarPagoAutomatico(fechaPago, paymentAmount);
+
+        assertEquals(initialBalance - paymentAmount, creditCardModel.getCurrent_limit());
+
+    }
+
+    @Test
+    void programarPagoAutomaticoTest_InsufficientFunds() {
+        LocalDate fechaPago = LocalDate.now();
+        int initialBalance = 100;
+        int paymentAmount = 500;
+
+        creditCardModel.setCurrent_limit(initialBalance);
+
+        controllerCreditCard.programarPagoAutomatico(fechaPago, paymentAmount);
+
+        assertEquals(initialBalance, creditCardModel.getCurrent_limit());
 
     }
 }

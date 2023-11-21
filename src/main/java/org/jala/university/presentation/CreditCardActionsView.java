@@ -8,6 +8,8 @@ import org.jala.university.utilities.Validator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CreditCardActionsView extends JFrame {
     private final ControllerCreditCard controllerRecordCard;
@@ -120,8 +122,25 @@ public class CreditCardActionsView extends JFrame {
                 }
             }
 
+
         });
 
+        JButton programarPagoButton = new JButton("Programar Pago");
+        btnPanel.add(programarPagoButton);
+
+        // Agrega el ActionListener para el botón "Programar Pago"
+        programarPagoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrirVentanaProgramarPago();
+            }
+        });
+    }
+
+    // Método para abrir la ventana de programar pago
+    private void abrirVentanaProgramarPago() {
+        ProgramarPagoView programarPagoView = new ProgramarPagoView(controllerRecordCard);
+        programarPagoView.setVisible(true);
     }
 
 }
