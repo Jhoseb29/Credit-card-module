@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import com.toedter.calendar.JDateChooser;
+//import com.toedter.calendar.JDateChooser;
 
 
 public class ProgramarPagoView extends JDialog {
     private final ControllerCreditCard controllerCreditCard;
 
-    private JDateChooser dateChooser;
+    //private JDateChooser dateChooser;
     private JTextField montoField;
 
     public ProgramarPagoView(ControllerCreditCard controllerCreditCard) {
@@ -27,7 +27,7 @@ public class ProgramarPagoView extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        dateChooser = new JDateChooser();
+        //dateChooser = new JDateChooser();
         montoField = new JTextField();
 
         JButton confirmButton = new JButton("Confirmar");
@@ -35,7 +35,7 @@ public class ProgramarPagoView extends JDialog {
 
         JPanel panel = new JPanel(new GridLayout(3, 2));
         panel.add(new JLabel("Fecha de Pago:"));
-        panel.add(dateChooser);
+        //panel.add(dateChooser);
         panel.add(new JLabel("Monto:"));
         panel.add(montoField);
         panel.add(confirmButton);
