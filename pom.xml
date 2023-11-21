@@ -122,7 +122,7 @@
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.8.8</version>
           <configuration>
-            <outputDirectory>${project.build.directory}/custom-jacoco</outputDirectory>
+            <outputDirectory>${project.build.directory}/code_coverage</outputDirectory>
           </configuration>
           <executions>
             <execution>
