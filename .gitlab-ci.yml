@@ -16,7 +16,6 @@
 stages:
   - build
   - test
-  - deploy
 
 variables:
   # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
@@ -67,6 +66,13 @@ lint:
   script:
     - 'mvn $MAVEN_CLI_OPTS checkstyle:check --settings ci_settings.xml'
 
+test-jacoco:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
+  artifacts:
+    paths:
+      - target/code_coverage/
 # Ejecución de pruebas unitarias
 unit_test:
   stage: test

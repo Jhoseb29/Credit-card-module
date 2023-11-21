@@ -40,20 +40,20 @@ public class InterfazView extends  JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if( validateCreditCard().getResultList().size() == 0){
+//                if( validateCreditCard().getResultList().size() == 0){
                     CreditCardView creditCardFormUI = new CreditCardView();
                     creditCardFormUI.setVisible(true);
-                }else {
-
-                    entityManager = entityManagerFactory.createEntityManager();
-                    EntityTransaction transaction = entityManager.getTransaction();
-                    RecordImpl record = new RecordImpl(new RecordDao(UUID.class, RecordModel.class, entityManager));
-                    CreditCardModel creditCardModel = null;
-                    CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(entityManager));
-                    creditCardTableModule.create(null);
-                    ControllerCreditCard controllerRecordCard = new ControllerCreditCard(creditCardModel, entityManager, creditCardTableModule, record );
-                    SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardModel, controllerRecordCard, record));
-                }
+//                }else {
+//
+//                    entityManager = entityManagerFactory.createEntityManager();
+//                    EntityTransaction transaction = entityManager.getTransaction();
+//                    RecordImpl record = new RecordImpl(new RecordDao(UUID.class, RecordModel.class, entityManager));
+//                    CreditCardModel creditCardModel = null;
+//                    CreditCardModule creditCardTableModule = new CreditCardImpl(new CreditCardDao(entityManager));
+//                    creditCardTableModule.create(null);
+//                    ControllerCreditCard controllerRecordCard = new ControllerCreditCard(creditCardModel, entityManager, creditCardTableModule, record );
+//                    SwingUtilities.invokeLater(() -> new InformationCreditCardView(creditCardModel, controllerRecordCard, record));
+//                }
 
             }
         });
