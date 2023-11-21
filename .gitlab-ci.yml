@@ -65,7 +65,13 @@ build_job:
 lint:
   stage: test
   script:
-    - 'mvn $MAVEN_CLI_OPTS checkstyle:check --settings ci_settings.xml'
+     - mvn checkstyle:check
+  artifacts:
+    paths:
+      - target/site/checkstyle.html
+      - target/site/checkstyle.xml
+    reports:
+      codequality: target/site/checkstyle.xml
 
 test-jacoco:
   stage: test
