@@ -73,7 +73,7 @@ lint:
     reports:
       codequality: target/site/checkstyle.xml
 
-test-jacoco:
+code_coverage:
   stage: test
   script:
     - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
@@ -84,16 +84,11 @@ test-jacoco:
 unit_test:
   stage: test
   script:
-    - 'mvn $MAVEN_CLI_OPTS test --settings ci_settings.xml'
-
-# Generación de informes de Code Coverage
-code_coverage:
-  stage: test
-  script:
-    - 'mvn $MAVEN_CLI_OPTS jacoco:prepare-agent test jacoco:report --settings ci_settings.xml'
+    - mvn test
   artifacts:
-    paths:
-      - target/site/jacoco/
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
 
 
 
