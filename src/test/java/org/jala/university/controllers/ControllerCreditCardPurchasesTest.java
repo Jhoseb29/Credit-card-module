@@ -30,8 +30,24 @@ public class ControllerCreditCardPurchasesTest {
 
   @Test
   void payTestSufficientFunds() {
-    // Arrange
     int initialBalance = 1000;
+    int paymentAmount = 500;
+
+    creditCardModel.setCurrent_limit(initialBalance);
+
+    EntityTransaction transaction = mock(EntityTransaction.class);
+    when(entityManager.getTransaction()).thenReturn(transaction);
+
+    int newBalance = controllerCreditCard.pay(paymentAmount);
+
+    int expectedBalance = initialBalance - paymentAmount;
+    assertEquals(expectedBalance, newBalance);
+  }
+
+  @Test
+  void payTestInsufficientFunds() {
+    // Arrange
+    int initialBalance = 100;
     int paymentAmount = 500;
 
     creditCardModel.setCurrent_limit(initialBalance);
@@ -44,20 +60,7 @@ public class ControllerCreditCardPurchasesTest {
     int newBalance = controllerCreditCard.pay(paymentAmount);
 
     // Assert
-    int expectedBalance = initialBalance - paymentAmount;
-    assertEquals(expectedBalance, newBalance);
+    // Ensure that the balance remains the same if there are insufficient funds
+    assertEquals(initialBalance, newBalance);
   }
 }
-
-  /*@Test
-  void payTestSufficientFunds() {
-    int initialBalance = 1000;
-    int paymentAmount = 500;
-
-    creditCardModel.setCurrent_limit(initialBalance);
-
-    int newBalance = controllerCreditCard.pay(paymentAmount);
-
-    int expectedBalance = initialBalance - paymentAmount;
-    assertEquals(expectedBalance, newBalance);
-  }*/
