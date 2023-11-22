@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface FormRepository extends JpaRepository<FormModel, UUID> {
-    @Query(value = "SELECT COUNT(*) FROM credit_card", nativeQuery = true)
-    int checkCard();
+
 }

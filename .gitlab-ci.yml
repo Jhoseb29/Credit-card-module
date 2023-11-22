@@ -13,6 +13,11 @@
 # * Verify but don't deploy merge requests.
 # * Deploy built artifacts from master branch only.
 
+stages:
+  - build
+  - test
+  - deploy
+
 variables:
   # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
   MAVEN_OPTS: >-
@@ -41,6 +46,7 @@ variables:
 # See https://maven.apache.org/docs/3.8.1/release-notes.html#how-to-fix-when-i-get-a-http-repository-blocked for more.
 image: maven:3-openjdk-17
 
+
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
 # Be aware that `mvn deploy` will install the built jar into this repository. If you notice your cache size
@@ -48,6 +54,52 @@ image: maven:3-openjdk-17
 cache:
   paths:
     - .m2/repository
+
+build_job:
+  stage: build
+  script:
+    - echo "Maven compile started"
+    - "mvn compile"
+
+build_application:
+  stage: build
+  script:
+    - mvn package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
+
+# Ejecución de pruebas de análisis de código estático (linter).
+lint:
+  stage: test
+  script:
+     - mvn checkstyle:check
+  artifacts:
+    paths:
+      - target/site/checkstyle.html
+      - target/site/checkstyle.xml
+    reports:
+      codequality: target/site/checkstyle.xml
+
+code_coverage:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
+  artifacts:
+    paths:
+      - target/code_coverage/
+# Ejecución de pruebas unitarias
+unit_test:
+  stage: test
+  script:
+    - mvn test
+  artifacts:
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+
+
 
 # For merge requests do not `deploy` but only run `verify`.
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
@@ -78,3 +130,5 @@ deploy:jdk17:
   only:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+
