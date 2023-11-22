@@ -118,6 +118,7 @@ public class CreditCardView extends JFrame {
       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
       entityManager = entityManagerFactory.createEntityManager();
       EntityTransaction transaction = entityManager.getTransaction();
+
       try {
         transaction.begin();
         FormModule formModule = new FormImpl(new FormDao(entityManager));

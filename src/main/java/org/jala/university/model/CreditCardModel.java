@@ -39,6 +39,6 @@ public class CreditCardModel implements EntityDAO<UUID> {
     private int NIP;
     @OneToOne(targetEntity = FormModel.class)
     private FormModel formModel;
-    @OneToMany(mappedBy = "creditCard", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "creditCard", cascade = CascadeType.ALL)
     private List<RecordModel> records;
 }

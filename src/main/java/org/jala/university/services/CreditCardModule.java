@@ -10,6 +10,7 @@ public interface CreditCardModule {
     List<CreditCardModel> getAll();
     CreditCardModel update(CreditCardModel creditCard);
     void delete(UUID id);
+    int checkCard();
     float getCurrentLimit(UUID id);
     float getCredit_limit(UUID id, double income);
     String getAccountStatus(UUID id);
