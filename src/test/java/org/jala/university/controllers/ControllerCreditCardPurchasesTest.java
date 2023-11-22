@@ -46,21 +46,16 @@ public class ControllerCreditCardPurchasesTest {
 
   @Test
   void payTestInsufficientFunds() {
-    // Arrange
     int initialBalance = 100;
     int paymentAmount = 500;
 
     creditCardModel.setCurrent_limit(initialBalance);
 
-    // Configura la instancia de EntityTransaction para que no sea null
     EntityTransaction transaction = mock(EntityTransaction.class);
     when(entityManager.getTransaction()).thenReturn(transaction);
 
-    // Act
     int newBalance = controllerCreditCard.pay(paymentAmount);
 
-    // Assert
-    // Ensure that the balance remains the same if there are insufficient funds
     assertEquals(initialBalance, newBalance);
   }
 }
