@@ -85,7 +85,7 @@ The project may have various Maven goals defined in its pom.xml file. Here are s
 **Clean and Build:** This goal cleans the project and then builds it, compiling the source code and creating the output artifact.
 
 ```bash
-mvn clean install
+mvn install
 ```
 **Run the Application:** If the project is an application with a main method, you can use the following command to run it:
 
