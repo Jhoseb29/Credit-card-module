@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <property name="javax.persistence.jdbc.password" value="evangelion"/>
 =======
             <property name="javax.persistence.jdbc.password" value="123456"/>
@@ -25,6 +26,9 @@
 =======
             <property name="javax.persistence.jdbc.password" value="evangelion"/>
 >>>>>>> c06c761 (US04-PIN randomico y arreglo de validaciones)
+=======
+            <property name="javax.persistence.jdbc.password" value="Afeksh21"/>
+>>>>>>> 4d8ead1 (US07-Solución errores de la rama de cancelacion de tarjeta porque se murio y tuvimos que traer los cambios a una nueva rama)
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
