@@ -13,10 +13,14 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CreditCardModule"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <property name="javax.persistence.jdbc.password" value="evangelion"/>
 =======
             <property name="javax.persistence.jdbc.password" value="123456"/>
 >>>>>>> c48ebd3 (US11/VerificacionBaseDeDatos Fix guardado)
+=======
+            <property name="javax.persistence.jdbc.password" value="Afeksh21"/>
+>>>>>>> bd8aa35 (US-004 vistas de butones de tarejta de credito y formullario)
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
