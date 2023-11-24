@@ -9,25 +9,15 @@ import org.jala.university.domain.CreditCardImpl;
 import org.jala.university.domain.CreditCardModule;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static javax.swing.JFrame.*;
 
-public class ButtonSolitationForm extends JFrame {
+public class ButtonSolitationForm extends JButton {
+    JFrame frame = new JFrame();
 
     public ButtonSolitationForm() {
-        setTitle("Button Credit Card");
-        setSize(400, 100);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
-
-        // Crear un botón para abrir el formulario de tarjeta de crédito
-        JButton openCreditCardButton = new JButton("Solicitud de tarjeta de credito");
+        setText("Solicitud de tarjeta de credito");
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -36,18 +26,18 @@ public class ButtonSolitationForm extends JFrame {
 
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        openCreditCardButton.addActionListener(new ActionListener() {
+        this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cuando se hace clic en el botón, abrir el formulario de tarjeta de crédito
                 CreditCardView creditCardFormUI = new CreditCardView(creditCardModule, entityManager);
                 creditCardFormUI.setVisible(true);
+                frame.setEnabled(false);
+                creditCardFormUI.setFrameCardView(frame);
             }
         });
-
-        // Agregar el botón a la vista del botón
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(openCreditCardButton);
-        add(buttonPanel, BorderLayout.CENTER);
+    }
+    public void setFrame(JFrame frame){
+        this.frame = frame;
     }
 }
