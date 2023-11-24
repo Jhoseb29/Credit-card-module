@@ -10,4 +10,5 @@ public interface CreditCardModule {
     List<CreditCardModel> getAll();
     CreditCardModel update(CreditCardModel creditCard);
     void delete(UUID id);
+    int checkCard();
 }
