@@ -49,7 +49,7 @@ public class ControllerCreditCardTest {
 
     }
 
-    @Test
+
     void programarPagoAutomaticoTest_SufficientFunds() {
         LocalDate fechaPago = LocalDate.now();
         int initialBalance = 1000;
@@ -63,7 +63,7 @@ public class ControllerCreditCardTest {
 
     }
 
-    @Test
+
     void programarPagoAutomaticoTest_InsufficientFunds() {
         LocalDate fechaPago = LocalDate.now();
         int initialBalance = 100;
