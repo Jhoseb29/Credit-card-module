@@ -3,6 +3,7 @@ package org.jala.university.services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.jala.university.dao.RecordDao;
+import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class RecordImplTest {
+    CreditCardModel creditCardModel;
 
     @BeforeEach
     public void setup(){
+        creditCardModel = CreditCardModel.builder().build();
 
     }
     @Test
@@ -26,7 +29,6 @@ public class RecordImplTest {
         EntityManager entityManager = mock(EntityManager.class);
         RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
         RecordModel recordModel = RecordModel.builder().id(UUID.randomUUID()).build();
-
         RecordModel newRecord = recordDao.create(recordModel);
         assertEquals(recordModel, newRecord);
         verify(entityManager, timeout(1)).persist(newRecord);
@@ -34,15 +36,16 @@ public class RecordImplTest {
     @Test
     void getAllRecordTest() {
         EntityManager entityManager = mock(EntityManager.class);
-        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
-        List<RecordModel> recordModels = Arrays.asList(
-                RecordModel.builder().id(UUID.randomUUID()).build()
-
-        );
         TypedQuery<RecordModel> typedQuery = mock(TypedQuery.class);
+        UUID creditCardId = UUID.randomUUID();
+        List<RecordModel> recordModels = Arrays.asList(
+                RecordModel.builder().id(UUID.randomUUID()).creditCard(CreditCardModel.builder().build()).build());
+
         when(entityManager.createQuery(anyString(), eq(RecordModel.class))).thenReturn(typedQuery);
+        when(typedQuery.setParameter("creditCardId", creditCardId)).thenReturn(typedQuery);
         when(typedQuery.getResultList()).thenReturn(recordModels);
-        List<RecordModel> actualRecords = recordDao.findAll();
+        RecordDao recordDao = new RecordDao(UUID.class, RecordModel.class, entityManager);
+        List<RecordModel> actualRecords = recordDao.findAll(creditCardId);
         assertEquals(recordModels, actualRecords);
     }
     @Test
