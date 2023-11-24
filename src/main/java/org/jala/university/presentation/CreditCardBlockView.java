@@ -1,6 +1,6 @@
 package org.jala.university.presentation;
 
-import org.jala.university.Services.CreditCardModule;
+import org.jala.university.services.CreditCardModule;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
