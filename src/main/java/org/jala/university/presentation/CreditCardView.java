@@ -78,11 +78,10 @@ public class CreditCardView extends JFrame {
       Date applicationDate = new Date();
 
       //Validators
-      double income;
       Date birthdate;
       try {
         income = Double.parseDouble(incomeText);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         birthdate = dateFormat.parse(birthdateText);
       } catch (ParseException | NumberFormatException ex) {
         Dialog.error("Por favor, ingrese datos válidos.");

@@ -11,4 +11,6 @@ public interface CreditCardModule {
     CreditCardModel update(CreditCardModel creditCard);
     void delete(UUID id);
     int checkCard();
+
+    void cancelCreditCardByNumber(String cardNumber);
 }
