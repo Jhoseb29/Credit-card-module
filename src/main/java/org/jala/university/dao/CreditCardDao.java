@@ -1,7 +1,9 @@
 package org.jala.university.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import jakarta.persistence.TypedQuery;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 
@@ -62,5 +64,21 @@ public class CreditCardDao extends AbstractDAO<CreditCardModel, UUID> {
                 .getResultList();
     }
 
+    @Transactional
+    public CreditCardModel findByCardNumber(String card) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<CreditCardModel> query = em.createQuery(
+                    "SELECT c FROM CreditCardModel c WHERE c.cardNumber = :cardNumber", CreditCardModel.class);
+            query.setParameter("cardNumber", card);
+            List<CreditCardModel> resultList = query.getResultList();
+            return resultList.isEmpty() ? null : resultList.get(0);
+        } finally {
+            em.close();
+        }
+    }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }
