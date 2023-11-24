@@ -12,6 +12,7 @@
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CreditCardModule"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <property name="javax.persistence.jdbc.user" value="root"/>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -34,6 +35,10 @@
             <property name="javax.persistence.jdbc.user" value="byteRebel"/>
             <property name="javax.persistence.jdbc.password" value="byteRebels123"/>
 >>>>>>> db91cfa (US13/PruebasUnitarias/DV se realizo pruebas unitarias de los metodos usados en el Formulario)
+=======
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="evangelion"/>
+>>>>>>> 050a8dd (US08/Pagos-Manuales)
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
