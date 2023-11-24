@@ -60,7 +60,12 @@ public class CreditCardView extends JFrame {
       String incomeText = inputFields.get("Income").getText();
       String birthdateText = inputFields.get("Birthdate (dd/mm/aaaa)").getText();
       String email = inputFields.get("Email").getText();
-      Date birthdate = null;
+
+      // Verifica si algún campo está vacío
+      if (address.isEmpty() || phoneNumber.isEmpty() || incomeText.isEmpty() || birthdateText.isEmpty() || email.isEmpty()) {
+        Dialog.error("Por favor, complete todos los campos.");
+        return;
+      }
 
       // Validación de campos vacíos
       if (address.isEmpty() || phoneNumber.isEmpty() || incomeText.isEmpty() || birthdateText.isEmpty() || email.isEmpty()) {
@@ -73,11 +78,15 @@ public class CreditCardView extends JFrame {
       Date applicationDate = new Date();
 
       //Validators
+      double income;
+      Date birthdate;
       try {
-        birthdate = dateFormat.parse(inputFields.get("Birthdate (dd/mm/aaaa)").getText());
-      } catch (ParseException ex) {
-        Dialog.error("Error al procesar la fecha de nacimiento.");
-
+        income = Double.parseDouble(incomeText);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        birthdate = dateFormat.parse(birthdateText);
+      } catch (ParseException | NumberFormatException ex) {
+        Dialog.error("Por favor, ingrese datos válidos.");
+        return;
       }
 
       if (!Validator.isValidBirthdate(inputFields.get("Birthdate (dd/mm/aaaa)").getText())) {
@@ -112,7 +121,7 @@ public class CreditCardView extends JFrame {
           .income(income)
           .birthdate(birthdate)
           .email(email)
-          .aplicationDate(applicationDate)
+          .aplicationDate(new Date())
           .build();
 
       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
