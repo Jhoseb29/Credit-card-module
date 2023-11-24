@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FormModule {
-    void create(FormModel creditCard);
+    FormModel create(FormModel creditCard);
     FormModel get(UUID id);
     List<FormModel> getAll();
     FormModel update(FormModel creditCard);
-    void delete(UUID id);
+    void deleteById(UUID id);
     int checkCard() throws Exception;
 }
