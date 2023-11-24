@@ -15,8 +15,9 @@ public class FormImpl implements FormModule {
     }
 
     @Override
-    public void create(FormModel creditCard) {
-        formDao.create(creditCard);
+    public FormModel create(FormModel formModel) {
+        formDao.create(formModel);
+        return formModel;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class FormImpl implements FormModule {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void deleteById(UUID id) {
         formDao.deleteById(id);
     }
 

@@ -11,6 +11,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CreditCardModule"/>
+<<<<<<< HEAD
             <property name="javax.persistence.jdbc.user" value="root"/>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -29,6 +30,10 @@
 =======
             <property name="javax.persistence.jdbc.password" value="Afeksh21"/>
 >>>>>>> 4d8ead1 (US07-Solución errores de la rama de cancelacion de tarjeta porque se murio y tuvimos que traer los cambios a una nueva rama)
+=======
+            <property name="javax.persistence.jdbc.user" value="byteRebel"/>
+            <property name="javax.persistence.jdbc.password" value="byteRebels123"/>
+>>>>>>> db91cfa (US13/PruebasUnitarias/DV se realizo pruebas unitarias de los metodos usados en el Formulario)
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
