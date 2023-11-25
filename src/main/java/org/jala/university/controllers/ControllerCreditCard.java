@@ -5,9 +5,11 @@ import org.jala.university.model.CreditCardModel;
 import org.jala.university.model.RecordModel;
 import org.jala.university.services.CreditCardModule;
 import org.jala.university.services.RecordImpl;
+import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.EnumOperations;
 import org.jala.university.utilities.Validator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -95,4 +97,39 @@ public class ControllerCreditCard {
             e.printStackTrace();
         }
     }
+
+    public void programarPagoAutomatico(LocalDate fechaPago, int montoPago) {
+        double saldoActual = creditCardModel.getCurrent_limit();
+
+        // Verificar si hay suficiente saldo para el pago
+        if (saldoActual >= montoPago) {
+            // Deducción del saldo de la tarjeta
+            saldoActual -= montoPago;
+
+            // Verificar si el saldo después del pago sigue siendo menor o igual al límite
+            if (saldoActual <= creditCardModel.getCurrent_limit()) {
+                // Crear un registro en el historial
+                RecordModel recordModel = RecordModel.builder()
+                        .date(java.sql.Date.valueOf(fechaPago))
+                        .creditCard(creditCardModel)
+                        .build();
+                record.create(recordModel);
+                logAction(EnumOperations.PAY.getOperationsName() + saldoActual);
+
+                // Actualizar el saldo de la tarjeta
+                creditCardModel.setCurrent_limit(saldoActual);
+                creditCardModule.update(creditCardModel);
+                commitTransaction();
+
+                Dialog.getInformation("Pago programado para el " + fechaPago + " por un monto de " + montoPago);
+            } else {
+                Dialog.error("El pago automático excede el límite de crédito. Saldo insuficiente.");
+            }
+        } else {
+            Dialog.error("Saldo insuficiente para programar el pago automático.");
+        }
+    }
+
+
+
 }
