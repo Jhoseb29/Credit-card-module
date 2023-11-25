@@ -68,7 +68,8 @@ public class ControllerCreditCard {
         commitTransaction();
         return currentBalance;
     }
-    private void logAction(String action){
+    private void logAction(String action) {
+        String logMessage = String.format("Action: %s, Date: %s", action, LocalDateTime.now());
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         RecordModel logRecord = RecordModel.builder()
