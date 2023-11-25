@@ -12,13 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreditCardActionsView extends JFrame {
+
     private final ControllerCreditCard controllerRecordCard;
     private final RecordImpl record;
     private final CreditCardModel creditCardModel;
     private JPanel topPanel;
     private JPanel btnPanel;
 
-    public CreditCardActionsView(ControllerCreditCard controllerRecordCard, RecordImpl record, CreditCardModel creditCardModel) {
+    public CreditCardActionsView(ControllerCreditCard controllerRecordCard, RecordImpl record,
+        CreditCardModel creditCardModel) {
         this.controllerRecordCard = controllerRecordCard;
         this.record = record;
         this.creditCardModel = creditCardModel;
@@ -33,11 +35,11 @@ public class CreditCardActionsView extends JFrame {
         topPanel.setLayout(new BorderLayout());
         add(topPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
-        JButton updateStatusButton = new JButton("UPDATE STATUS");
-        JButton updatePinButton = new JButton("UPDATE PIN");
-        JButton makePayButton = new JButton("PAY");
-        JButton showHistoryButton = new JButton("SHOW HISTORY");
-        JButton withdrawCashButton = new JButton("WITHDRAW CASH");
+        JButton updateStatusButton = new JButton("Update Status");
+        JButton updatePinButton = new JButton("Update PIN");
+        JButton makePayButton = new JButton("Manual Payment");
+        JButton showHistoryButton = new JButton("Show History");
+        JButton withdrawCashButton = new JButton("Withdraw Cash");
 
         btnPanel.add(updateStatusButton);
         btnPanel.add(updatePinButton);
@@ -46,83 +48,84 @@ public class CreditCardActionsView extends JFrame {
         btnPanel.add(withdrawCashButton);
 
         updateStatusButton.addActionListener(event -> {
-            String [] statusOptions = {"Active", "Inactive"};
+            String[] statusOptions = {"Active", "Inactive"};
             String select = (String) JOptionPane.showInputDialog(
-                    this,
-                    "Select a new status: ",
-                    "Update Status",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    statusOptions,
-                    statusOptions[0]
+                this,
+                "Select a new status: ",
+                "Update Status",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                statusOptions,
+                statusOptions[0]
             );
-            if (select != null){
+            if (select != null) {
                 int newStatus = (select.equals("Active")) ? 1 : 0;
                 controllerRecordCard.updateStatus(newStatus);
             }
         });
-        updatePinButton.addActionListener(event ->{
-            String newPinStr= JOptionPane.showInputDialog(this,
-                    "Enter a new pin: ");
-            if(newPinStr!=null && !newPinStr.isEmpty()){
+        updatePinButton.addActionListener(event -> {
+            String newPinStr = JOptionPane.showInputDialog(this,
+                "Enter a new pin: ");
+            if (newPinStr != null && !newPinStr.isEmpty()) {
                 try {
                     int newPin = Integer.parseInt(newPinStr);
-                    if (newPin >= 1000 && newPin<=9999){
+                    if (newPin >= 1000 && newPin <= 9999) {
                         controllerRecordCard.updatePin(newPin);
-                    }
-                    else {
+                    } else {
                         Dialog.error("The PIN must be 4 digits long.");
                     }
-                }
-                catch (NumberFormatException numberFormatException){
+                } catch (NumberFormatException numberFormatException) {
                     Dialog.error("Enter a valid numeric value for the PIN");
                 }
             }
         });
-        makePayButton.addActionListener(event ->{
-            String mountStr = JOptionPane.showInputDialog(this, "Enter the mount: ");
-            if (mountStr != null && !mountStr.isEmpty()){
-                try {
-                    int mount = Integer.parseInt(mountStr);
-                    if (mount>0){
-                        int balance = controllerRecordCard.pay(mount);
-                        Dialog.getInformation("Successful payment."  + balance);
-                    }
-                    else {
-                        Dialog.error("Enter a validate mount.");
-                    }
-                }
-                catch (NumberFormatException numberFormatException){
-                    Dialog.error("Enter a valid numeric value for the mount");
 
+        makePayButton.addActionListener(event -> {
+            String inputAmount = JOptionPane.showInputDialog(this, "Enter the amount: ");
+
+            if (inputAmount != null && !inputAmount.isEmpty()) {
+                try {
+                    int paymentAmount = Integer.parseInt(inputAmount);
+
+                    if (paymentAmount > 0) {
+                        int balanceAfterPayment = controllerRecordCard.pay(paymentAmount);
+
+                        if (balanceAfterPayment >= 0) {
+                            Dialog.getInformation("Successful payment. New balance: " + balanceAfterPayment);
+                        } else {
+                            Dialog.error("Insufficient funds. Payment not processed.");
+                        }
+                    } else {
+                        Dialog.error("Enter a valid positive amount.");
+                    }
+                } catch (NumberFormatException e) {
+                    Dialog.error("Enter a valid numeric value for the amount");
                 }
             }
         });
+
         showHistoryButton.addActionListener(event->{
             RecordView recordView = new RecordView(record, creditCardModel);
             recordView.setVisible(true);
 
         });
-        withdrawCashButton.addActionListener(event->{
+        withdrawCashButton.addActionListener(event -> {
             int currentBalance = (int) creditCardModel.getCurrent_limit();
             String mountStr = JOptionPane.showInputDialog(this, "Enter the mount");
-            if (mountStr != null && !mountStr.isEmpty()){
+            if (mountStr != null && !mountStr.isEmpty()) {
                 try {
                     int mount = Integer.parseInt(mountStr);
-                    if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus())){
+                    if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus())) {
                         int balance = controllerRecordCard.withdrawCash(mount);
                         Dialog.getInformation("Successful Retirement " + balance);
+                    } else {
+                        Dialog.error(
+                            "Enter a valid numeric value for the mount or review the status of the card.");
                     }
-                    else {
-                        Dialog.error("Enter a valid numeric value for the mount or review the status of the card.");
-                    }
-                }
-                catch (NumberFormatException numberFormatException){
+                } catch (NumberFormatException numberFormatException) {
                     Dialog.error("Enter a valid numeric value for the mount");
                 }
             }
-
-
         });
 
         JButton programarPagoButton = new JButton("Programar Pago");

@@ -1,3 +1,4 @@
+
 package org.jala.university.controllers;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -12,15 +13,13 @@ import org.jala.university.utilities.Validator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-
-
 public class ControllerCreditCard {
     private final CreditCardModel creditCardModel;
     private final EntityManager entityManager;
-    private final   CreditCardModule creditCardModule;
+    private final CreditCardModule creditCardModule;
     private final RecordImpl record;
-
-    public ControllerCreditCard(CreditCardModel creditCardModel, EntityManager entityManager, CreditCardModule creditCardModule, RecordImpl record ) {
+    public ControllerCreditCard(CreditCardModel creditCardModel, EntityManager entityManager,
+        CreditCardModule creditCardModule, RecordImpl record) {
         this.creditCardModel = creditCardModel;
         this.entityManager = entityManager;
         this.creditCardModule = creditCardModule;
@@ -38,22 +37,25 @@ public class ControllerCreditCard {
         creditCardModule.update(creditCardModel);
         commitTransaction();
     }
-    public int pay(int mount){
+    public int pay(int amount) {
         int currentBalance = (int) creditCardModel.getCurrent_limit();
-        currentBalance -= mount;
-        creditCardModel.setCurrent_limit(currentBalance);
-        logAction(EnumOperations.PAY.getOperationsName() + currentBalance);
-        creditCardModule.update(creditCardModel);
-        commitTransaction();
+        if (currentBalance >= amount) {
+            currentBalance -= amount;
+            creditCardModel.setCurrent_limit(currentBalance);
+            logAction(EnumOperations.PAY.getOperationsName() + currentBalance);
+            creditCardModule.update(creditCardModel);
+            commitTransaction();
+        } else {
+            Dialog.error("Insufficient funds. Payment not processed.");
+        }
         return currentBalance;
-
     }
-
     public int withdrawCash(int mount) {
         int currentBalance = (int) creditCardModel.getCurrent_limit();
         int statusCard = creditCardModel.getStatus();
         if (!Validator.isValidWithdrawal(mount, currentBalance, statusCard)) {
-            System.out.println("Invalid withdrawal amount. Please check your balance or review the status of the card");
+            System.out.println(
+                "Invalid withdrawal amount. Please check your balance or review the status of the card");
             return currentBalance;
         }
         int desc = (int) (mount * 0.05);
@@ -72,17 +74,16 @@ public class ControllerCreditCard {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         RecordModel logRecord = RecordModel.builder()
-                .operation(action)
-                .current_limit(creditCardModel.getCurrent_limit())
-                .PIN(creditCardModel.getNIP())
-                .status(creditCardModel.getStatus())
-                .date(new Date())
-                .creditCard(creditCardModel)
-                .build();
+            .operation(action)
+            .current_limit(creditCardModel.getCurrent_limit())
+            .PIN(creditCardModel.getNIP())
+            .status(creditCardModel.getStatus())
+            .date(new Date())
+            .creditCard(creditCardModel)
+            .build();
         record.create(logRecord);
         commitTransaction();
     }
-
     private void commitTransaction() {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
