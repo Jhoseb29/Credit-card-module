@@ -102,8 +102,8 @@ public class CreditCardActionsView extends JFrame {
             }
         });
 
-        showHistoryButton.addActionListener(event -> {
-            RecordView recordView = new RecordView(record);
+        showHistoryButton.addActionListener(event->{
+            RecordView recordView = new RecordView(record, creditCardModel);
             recordView.setVisible(true);
 
         });
