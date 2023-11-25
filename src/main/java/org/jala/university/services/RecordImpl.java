@@ -19,12 +19,12 @@ public class RecordImpl {
         return recordModel;
     }
 
-    public List<RecordModel> findAll() {
-        return recordDao.findAll();
+    public List<RecordModel> findAll(UUID creditCarId) {
+        return recordDao.findAll(creditCarId);
     }
 
-    public void delete() {
-        List<RecordModel> allRecords = recordDao.findAll();
+    public void delete(UUID creditCard) {
+        List<RecordModel> allRecords = recordDao.findAll(creditCard);
         for (RecordModel recordModel : allRecords) {
             recordDao.delete(recordModel);
         }

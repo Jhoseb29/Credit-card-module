@@ -1,6 +1,7 @@
 package org.jala.university.presentation;
 
 
+import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
 import org.jala.university.utilities.Dialog;
 
@@ -15,15 +16,17 @@ public class RecordView extends JFrame {
     private JScrollPane scrollPane;
 
     private UUID selectedAccountId;
+    private final CreditCardModel creditCardModel;
 
-    public RecordView(RecordImpl record) {
+    public RecordView(RecordImpl record, CreditCardModel creditCardModel) {
         this.record = record;
+        this.creditCardModel = creditCardModel;
         setTitle("Record Credit Card");
         setSize(500, 500);
         setBackground(Color.gray);
         setLocationRelativeTo(null);
 
-        RecordTable recordTableView = new RecordTable(record.findAll());
+        RecordTable recordTableView = new RecordTable(record.findAll(creditCardModel.getId()));
         JTable list = new JTable(recordTableView);
 
         list.setRowSelectionAllowed(true);
@@ -55,15 +58,15 @@ public class RecordView extends JFrame {
         addButtonDeleteByID.addActionListener(e -> {
             if (selectedAccountId != null) {
                 record.deleteById(selectedAccountId);
-                recordTableView.refresh(record.findAll());
+                recordTableView.refresh(record.findAll(creditCardModel.getId()));
             } else {
                 Dialog.error("You did not select the id to delete.");
             }
         });
 
         addButtonDeleteAll.addActionListener(e -> {
-            record.delete();
-            recordTableView.refresh(record.findAll());
+            record.delete(creditCardModel.getId());
+            recordTableView.refresh(record.findAll(creditCardModel.getId()));
         });
 
 
