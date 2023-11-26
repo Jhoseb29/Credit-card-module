@@ -64,7 +64,7 @@
       <url>https://gitlab.com/api/v4/projects/50614146/packages/maven</url>
     </repository>
       <repository>
-        <id>gitlab-maven-repo</id>
+        <id>base-module-repo</id>
         <url>https://gitlab.com/jala-university1/cohort-1/software-development-2-es/secci-n-b/capstone/base-module</url>
       </repository>
   </repositories>
