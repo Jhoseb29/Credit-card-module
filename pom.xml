@@ -60,7 +60,7 @@
 
   <repositories>
     <repository>
-      <id>base-module-repo</id>
+      <id>base-module-repo-do-we-need-this</id>
       <url>https://gitlab.com/api/v4/projects/50614146/packages/maven</url>
     </repository>
       <repository>
