@@ -62,12 +62,12 @@
     <repository>
       <id>base-module-repo</id>
       <url>https://gitlab.com/jala-university1/cohort-1/software-development-2-es/secci-n-b/capstone/base-module</url>
+      <releases>
+        <enabled>false</enabled>
+        <updatePolicy>always</updatePolicy>
+        <checksumPolicy>warn</checksumPolicy>
+      </releases>
     </repository>
-    <releases>
-      <enabled>false</enabled>
-      <updatePolicy>always</updatePolicy>
-      <checksumPolicy>warn</checksumPolicy>
-    </releases>
   </repositories>
   <distributionManagement>
     <repository>
