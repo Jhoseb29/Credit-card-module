@@ -1,5 +1,7 @@
 package org.jala.university.dao;
+
 import org.jala.university.model.FormModel;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +9,11 @@ import java.util.UUID;
 
 public class FormDaoMock extends FormDao {
     private final Map<UUID, FormModel> cardFormMap = new HashMap<>();
+
     public FormDaoMock() {
         super(null);
     }
+
     @Override
     public FormModel findOne(UUID ruleGroupId) {
         return cardFormMap.get(ruleGroupId);

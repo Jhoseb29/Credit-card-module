@@ -1,14 +1,13 @@
 package org.jala.university.presentation;
 
 
+import org.jala.university.services.CreditCardModule;
+import org.jala.university.utilities.Dialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import org.jala.university.services.CreditCardModule;
-import org.jala.university.utilities.Dialog;
 
 public class CancelCreditCardFormView extends JDialog {
     private final CreditCardModule creditCardModule;

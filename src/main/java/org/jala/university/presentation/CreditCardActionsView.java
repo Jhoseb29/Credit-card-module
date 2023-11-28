@@ -1,8 +1,8 @@
 package org.jala.university.presentation;
 
+import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
-import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.Validator;
 
@@ -25,7 +25,7 @@ public class CreditCardActionsView extends JFrame {
         this.record = record;
         this.creditCardModel = creditCardModel;
         setTitle("Credit Card Actions");
-        setSize(800, 500);
+        setSize(1000, 500);
         setBackground(Color.gray);
         setLocationRelativeTo(null);
 
@@ -36,16 +36,18 @@ public class CreditCardActionsView extends JFrame {
         add(topPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
         JButton updateStatusButton = new JButton("Update Status");
-        JButton updatePinButton = new JButton("Update PIN");
+        JButton updatePinButton = new JButton("Update Pin");
         JButton makePayButton = new JButton("Manual Payment");
         JButton showHistoryButton = new JButton("Show History");
         JButton withdrawCashButton = new JButton("Withdraw Cash");
+        JButton deleteCreditCard = new JButton("Delete credit card");
 
         btnPanel.add(updateStatusButton);
         btnPanel.add(updatePinButton);
         btnPanel.add(makePayButton);
         btnPanel.add(showHistoryButton);
         btnPanel.add(withdrawCashButton);
+        btnPanel.add(deleteCreditCard);
 
         updateStatusButton.addActionListener(event -> {
             String[] statusOptions = {"Active", "Inactive"};
@@ -111,24 +113,26 @@ public class CreditCardActionsView extends JFrame {
         });
         withdrawCashButton.addActionListener(event -> {
             int currentBalance = (int) creditCardModel.getCurrent_limit();
-            String mountStr = JOptionPane.showInputDialog(this, "Enter the mount");
-            if (mountStr != null && !mountStr.isEmpty()) {
-                try {
-                    int mount = Integer.parseInt(mountStr);
-                    if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus())) {
-                        int balance = controllerRecordCard.withdrawCash(mount);
-                        Dialog.getInformation("Successful Retirement " + balance);
-                    } else {
-                        Dialog.error(
-                            "Enter a valid numeric value for the mount or review the status of the card.");
+            String enteredPin = JOptionPane.showInputDialog(this, "Enter your PIN");
+            if (enteredPin != null && !enteredPin.isEmpty()) {
+                String mountStr = JOptionPane.showInputDialog(this, "Enter the withdrawal amount");
+                if (mountStr != null && !mountStr.isEmpty()) {
+                    try {
+                        int mount = Integer.parseInt(mountStr);
+                        if (Validator.isValidWithdrawal(mount, currentBalance, creditCardModel.getStatus(), Integer.parseInt(enteredPin), creditCardModel.getNIP())) {
+                            int balance = controllerRecordCard.withdrawCash(mount, Integer.parseInt(enteredPin));
+                            Dialog.getInformation("Successful Retirement. New balance: " + balance);
+                        } else {
+                            Dialog.error("Enter a valid numeric value for the withdrawal amount or review the status of the card.");
+                        }
+                    } catch (NumberFormatException numberFormatException) {
+                        Dialog.error("Enter a valid numeric value for the withdrawal amount");
                     }
-                } catch (NumberFormatException numberFormatException) {
-                    Dialog.error("Enter a valid numeric value for the mount");
                 }
             }
         });
 
-        JButton programarPagoButton = new JButton("Programar Pago");
+        JButton programarPagoButton = new JButton("Schedule Payment");
         btnPanel.add(programarPagoButton);
 
         // Agrega el ActionListener para el botón "Programar Pago"
@@ -137,6 +141,11 @@ public class CreditCardActionsView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 abrirVentanaProgramarPago();
             }
+        });
+        deleteCreditCard.addActionListener(event -> {
+            CreditCardBlockView cardManagent = new CreditCardBlockView();
+            cardManagent.setVisible(true);
+
         });
     }
 

@@ -7,7 +7,8 @@ public class Dialog {
         JOptionPane.showMessageDialog(null, reason, "ERROR", JOptionPane.ERROR_MESSAGE);
 
     }
-    public static void getInformation(String message){
+
+    public static void getInformation(String message) {
         JOptionPane.showMessageDialog(null, message, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
     }

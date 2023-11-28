@@ -6,7 +6,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
 public class Querys {
-    public static Query validateCreditCard(){
+    public static Query validateCreditCard() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CardModule");
         EntityManager em = entityManagerFactory.createEntityManager();
         String sql = "SELECT card FROM credit_card";

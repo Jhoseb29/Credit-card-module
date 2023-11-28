@@ -10,13 +10,14 @@ import java.util.UUID;
 
 public class RecordTable extends AbstractTableModel {
     private List<RecordModel> recordModels;
-    private String[] columnNames = {"ID", "OPERATION", "CURRENT_BALANCE", "PIN", "STATUS", "DATE"};
-    public RecordTable(List<RecordModel> recordModels){
+    private final String[] columnNames = {"ID", "OPERATION", "CURRENT_BALANCE", "PIN", "STATUS", "DATE"};
+
+    public RecordTable(List<RecordModel> recordModels) {
         this.recordModels = recordModels;
     }
 
     @Override
-    public String getColumnName(int columnIndex){
+    public String getColumnName(int columnIndex) {
         return columnNames[columnIndex];
     }
 
@@ -51,8 +52,8 @@ public class RecordTable extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex){
-        switch (columnIndex){
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
             case 0:
                 return UUID.class;
             case 1:
@@ -69,6 +70,7 @@ public class RecordTable extends AbstractTableModel {
         }
         return null;
     }
+
     public void refresh(List<RecordModel> list) {
         Collections.reverse(list);
         this.recordModels = list;

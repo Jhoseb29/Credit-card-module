@@ -4,7 +4,6 @@ import org.jala.university.dao.CreditCardDao;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.repository.CreditCardRepository;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -45,25 +44,6 @@ public class CreditCardImpl implements CreditCardModule {
     @Override
     public int checkCard() {
         return creditCardRepository.checkCard();
-    }
-
-    public float getCurrentLimit(UUID id) {
-        return (float) creditCardDao.getCurrentLimit(id);
-    }
-
-    @Override
-    public float getCredit_limit(UUID id, double income) {
-        return creditCardDao.calculateCreditLimit(id, income);
-    }
-
-    @Override
-    public String getAccountStatus(UUID id) {
-        return creditCardDao.getAccountStatus(id);
-    }
-
-    @Override
-    public String getExpirationDate(UUID id) {
-        return creditCardDao.getExpirationDate(id);
     }
 
     @Override

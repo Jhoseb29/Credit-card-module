@@ -11,12 +11,11 @@ import java.util.UUID;
 
 public class RecordView extends JFrame {
     private final RecordImpl record;
-    private JPanel topPanel;
-    private JPanel btnPanel;
-    private JScrollPane scrollPane;
-
-    private UUID selectedAccountId;
     private final CreditCardModel creditCardModel;
+    private final JPanel topPanel;
+    private final JPanel btnPanel;
+    private final JScrollPane scrollPane;
+    private UUID selectedAccountId;
 
     public RecordView(RecordImpl record, CreditCardModel creditCardModel) {
         this.record = record;
@@ -36,7 +35,7 @@ public class RecordView extends JFrame {
             UUID selectedData = null;
 
             int selectedRow = list.getSelectedRow();
-            if(selectedRow == -1) {
+            if (selectedRow == -1) {
                 return;
             }
 

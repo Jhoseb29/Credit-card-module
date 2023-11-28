@@ -41,7 +41,9 @@ public class ControllerCreditCardTest {
         int mount = 500; // tu puedes poner el monto que deseas retirar
         int statusCard = 1;
         creditCardModel.setStatus(statusCard);
-        int currentBalance = controllerCreditCard.withdrawCash(mount);
+        int pin = 1234; // tu puedes poner el pin q deseas
+        creditCardModel.setNIP(pin);
+        int currentBalance = controllerCreditCard.withdrawCash(mount, pin);
         int expectedBalance = balance - (int) (mount + mount * 0.05);
         assertEquals(expectedBalance, currentBalance);
         System.out.println(expectedBalance);
@@ -57,7 +59,7 @@ public class ControllerCreditCardTest {
 
         creditCardModel.setCurrent_limit(initialBalance);
 
-        controllerCreditCard.programarPagoAutomatico(fechaPago, paymentAmount);
+        controllerCreditCard.scheduleAutomaticPayment(fechaPago, paymentAmount);
 
         assertEquals(initialBalance - paymentAmount, creditCardModel.getCurrent_limit());
 
@@ -71,7 +73,7 @@ public class ControllerCreditCardTest {
 
         creditCardModel.setCurrent_limit(initialBalance);
 
-        controllerCreditCard.programarPagoAutomatico(fechaPago, paymentAmount);
+        controllerCreditCard.scheduleAutomaticPayment(fechaPago, paymentAmount);
 
         assertEquals(initialBalance, creditCardModel.getCurrent_limit());
 

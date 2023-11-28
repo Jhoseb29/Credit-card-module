@@ -22,7 +22,7 @@ public class ProgramarPagoView extends JDialog {
     }
 
     private void initialize() {
-        setTitle("Programar Pago Automático");
+        setTitle("Schedule Automatic Payment");
         setSize(300, 150);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -32,17 +32,17 @@ public class ProgramarPagoView extends JDialog {
         yearComboBox = new JComboBox<>(IntStream.rangeClosed(LocalDate.now().getYear(), LocalDate.now().getYear() + 10).boxed().toArray(Integer[]::new));
         montoField = new JTextField();
 
-        JButton confirmButton = new JButton("Confirmar");
-        JButton cancelButton = new JButton("Cancelar");
+        JButton confirmButton = new JButton("Confirm");
+        JButton cancelButton = new JButton("Cancel");
 
         JPanel panel = new JPanel(new GridLayout(4, 2));
-        panel.add(new JLabel("Día de Pago:"));
+        panel.add(new JLabel("Payday:"));
         panel.add(dayComboBox);
-        panel.add(new JLabel("Mes de Pago:"));
+        panel.add(new JLabel("Payment Month:"));
         panel.add(monthComboBox);
-        panel.add(new JLabel("Año de Pago:"));
+        panel.add(new JLabel("Payment Year:"));
         panel.add(yearComboBox);
-        panel.add(new JLabel("Monto:"));
+        panel.add(new JLabel("Amount:"));
         panel.add(montoField);
         panel.add(confirmButton);
         panel.add(cancelButton);
@@ -62,10 +62,10 @@ public class ProgramarPagoView extends JDialog {
             LocalDate fechaPago = LocalDate.of(year, month, day);
             int montoPago = Integer.parseInt(montoField.getText());
 
-            controllerCreditCard.programarPagoAutomatico(fechaPago, montoPago);
+            controllerCreditCard.scheduleAutomaticPayment(fechaPago, montoPago);
             dispose();
         } catch (NumberFormatException | NullPointerException | DateTimeException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese una fecha y un monto válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a valid date and amount.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

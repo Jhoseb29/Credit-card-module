@@ -1,7 +1,7 @@
 package org.jala.university.services;
 
-import org.jala.university.model.FormModel;
 import org.jala.university.dao.FormDao;
+import org.jala.university.model.FormModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,10 +39,10 @@ public class FormImpl implements FormModule {
         formDao.deleteById(id);
     }
 
-    public int checkCard() throws Exception{
-        try{
+    public int checkCard() throws Exception {
+        try {
             //int count = FormRepository.checkCard();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
         return 0;

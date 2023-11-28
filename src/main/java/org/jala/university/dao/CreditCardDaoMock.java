@@ -1,6 +1,7 @@
 package org.jala.university.dao;
 
 import org.jala.university.model.CreditCardModel;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,11 @@ import java.util.UUID;
 
 public class CreditCardDaoMock extends CreditCardDao {
     private final Map<UUID, CreditCardModel> cardFormMap = new HashMap<>();
+
     public CreditCardDaoMock() {
         super(null);
     }
+
     @Override
     public CreditCardModel findOne(UUID ruleGroupId) {
         return cardFormMap.get(ruleGroupId);

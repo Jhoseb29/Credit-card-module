@@ -13,6 +13,7 @@ public class RecordDao extends AbstractDAO<RecordModel, UUID> {
     public RecordDao(Class<UUID> idClazz, Class<RecordModel> clazzToSet, EntityManager entityManager) {
         super(idClazz, clazzToSet, entityManager);
     }
+
     @Transactional
     public List<RecordModel> findAll(UUID creditCardId) {
         return entityManager.createQuery("SELECT r FROM record r WHERE r.creditCard.id = :creditCardId", RecordModel.class)
@@ -25,7 +26,6 @@ public class RecordDao extends AbstractDAO<RecordModel, UUID> {
         entityManager.persist(entity);
         return entity;
     }
-
 
 
 }

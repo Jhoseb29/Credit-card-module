@@ -8,6 +8,7 @@ import org.jala.university.dao.EntityDAO;
 
 import java.util.Date;
 import java.util.UUID;
+
 @Entity(name = "form")
 @Getter
 @Setter
@@ -15,11 +16,11 @@ import java.util.UUID;
 public class FormModel implements EntityDAO<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_form",nullable = false)
+    @Column(name = "id_form", nullable = false)
     private UUID id;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false,name = "phone_number")
+    @Column(nullable = false, name = "phone_number")
     private String phoneNumber;
     @Column(nullable = false)
     private double income;

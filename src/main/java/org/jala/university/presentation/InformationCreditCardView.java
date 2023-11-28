@@ -1,8 +1,8 @@
 package org.jala.university.presentation;
 
+import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.model.CreditCardModel;
 import org.jala.university.services.RecordImpl;
-import org.jala.university.controllers.ControllerCreditCard;
 import org.jala.university.utilities.Dialog;
 import org.jala.university.utilities.PaneCard;
 
@@ -11,7 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static java.awt.Font.*;
+import static java.awt.Font.BOLD;
+import static java.awt.Font.ITALIC;
 
 public class InformationCreditCardView {
     private JFrame frame;
@@ -20,7 +21,7 @@ public class InformationCreditCardView {
     private RecordImpl record; // Agregado
 
     public InformationCreditCardView(CreditCardModel creditCardModel, ControllerCreditCard controllerRecordCard, RecordImpl record) {
-        int WIDTH_BUTTON = 130;
+        int WIDTH_BUTTON = 160;
         int HEIGHT_BUTTON = 30;
         this.creditCardModel = creditCardModel;
         this.controllerCreditCard = controllerRecordCard; // Agregado
@@ -34,17 +35,21 @@ public class InformationCreditCardView {
 
         JButton btnStatus = new JButton("See Status"); btnStatus.setBounds(20,293,WIDTH_BUTTON,HEIGHT_BUTTON);
         JButton btnBalance = new JButton("See Balance"); btnBalance.setBounds(185,293,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnBalanceLimit = new JButton("See Balance Limit"); btnBalanceLimit.setBounds(350,293,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnCardManagement = new JButton("Card management"); btnCardManagement.setBounds(20,344,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnGeneratePin = new JButton("PIN"); btnGeneratePin.setBounds(185,344,WIDTH_BUTTON,HEIGHT_BUTTON);
-        JButton btnActionsCard = new JButton("ACTIONS CARD"); btnActionsCard.setBounds(350,344,WIDTH_BUTTON,HEIGHT_BUTTON);
+        JButton btnBalanceLimit = new JButton("See Balance limit");
+        btnBalanceLimit.setBounds(350, 293, WIDTH_BUTTON, HEIGHT_BUTTON);
+        JButton btnPin = new JButton("See pin");
+        btnPin.setBounds(185, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
+        JButton btnActionsCard = new JButton("Actions card");
+        btnActionsCard.setBounds(350, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
+        JButton btnCard = new JButton("Card");
+        btnCard.setBounds(20, 344, WIDTH_BUTTON, HEIGHT_BUTTON);
 
         frame.add(btnStatus);
         frame.add(btnBalance);
         frame.add(btnBalanceLimit);
-        frame.add(btnCardManagement);
-        frame.add(btnGeneratePin);
+        frame.add(btnPin);
         frame.add(btnActionsCard);
+        frame.add(btnCard);
 
         PaneCard frontPanel = new PaneCard(new Color(0x666f7f),new Color(0x262d3d),new Color(0x262d3d)); frontPanel.setBounds(10,10,380,180);
         PaneCard backPanel = new PaneCard(new Color(0xe8e6e6),new Color(0xd7d7d7),new Color(0xD7D7D7)); backPanel.setBounds(100,40,380,180);
@@ -54,8 +59,14 @@ public class InformationCreditCardView {
 
         btnStatus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String status = String.valueOf(creditCardModel.getStatus());
-                Dialog.getInformation("Status:" + status);
+                int status = creditCardModel.getStatus();
+                String message;
+                if (status == 1) {
+                    message = "Active";
+                } else {
+                    message = "Inactive";
+                }
+                Dialog.getInformation("Status:" + message);
             }
         });
 
@@ -73,18 +84,11 @@ public class InformationCreditCardView {
             }
         });
 
-        btnCardManagement.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CreditCardBlockView cardManagent = new CreditCardBlockView();
-                cardManagent.setVisible(true);
-            }
-        });
-
-        btnGeneratePin.addActionListener(new ActionListener() {
+        btnPin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RandomPinGeneratorView pinGeneratorView = new RandomPinGeneratorView();
-                pinGeneratorView.setVisible(true);
+                int pin = creditCardModel.getNIP();
+                Dialog.getInformation("Pin " + pin);
             }
         });
 
@@ -95,6 +99,10 @@ public class InformationCreditCardView {
 
             // Hacer visible la nueva vista
             creditCardActionsView.setVisible(true);
+        });
+        btnCard.addActionListener(event -> {
+            String card = creditCardModel.getCard();
+            Dialog.getInformation("Card: " + card);
         });
 
         frame.setVisible(true);

@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
+
 @Repository
 public class RecordImpl {
     private final RecordDao recordDao;
+
     public RecordImpl(RecordDao recordDao) {
         this.recordDao = recordDao;
-        
+
     }
 
     public RecordModel create(RecordModel recordModel) {

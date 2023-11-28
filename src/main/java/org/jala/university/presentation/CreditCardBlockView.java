@@ -1,6 +1,5 @@
 package org.jala.university.presentation;
 
-import org.jala.university.services.CreditCardModule;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,10 +12,8 @@ public class CreditCardBlockView extends JFrame {
 
   private JTextField cardNumberField;
   private JTextArea resultArea;
-
   public CreditCardBlockView() {
     creditCards = new HashMap<>();
-
     setTitle("Credit Card Management");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(300, 200);

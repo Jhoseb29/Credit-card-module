@@ -11,7 +11,6 @@ import org.jala.university.utilities.EnumOperations;
 import org.jala.university.utilities.Validator;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 public class ControllerCreditCard {
     private final CreditCardModel creditCardModel;
@@ -50,10 +49,12 @@ public class ControllerCreditCard {
         }
         return currentBalance;
     }
-    public int withdrawCash(int mount) {
+
+    public int withdrawCash(int mount, int pin) {
         int currentBalance = (int) creditCardModel.getCurrent_limit();
         int statusCard = creditCardModel.getStatus();
-        if (!Validator.isValidWithdrawal(mount, currentBalance, statusCard)) {
+        int pinCard = creditCardModel.getNIP();
+        if (!Validator.isValidWithdrawal(mount, currentBalance, statusCard, pinCard, pin)) {
             System.out.println(
                 "Invalid withdrawal amount. Please check your balance or review the status of the card");
             return currentBalance;
@@ -99,35 +100,35 @@ public class ControllerCreditCard {
         }
     }
 
-    public void programarPagoAutomatico(LocalDate fechaPago, int montoPago) {
-        double saldoActual = creditCardModel.getCurrent_limit();
+    public void scheduleAutomaticPayment(LocalDate payDay, int paymentAmount) {
+        double currentBalance = creditCardModel.getCurrent_limit();
 
         // Verificar si hay suficiente saldo para el pago
-        if (saldoActual >= montoPago) {
+        if (currentBalance >= paymentAmount) {
             // Deducción del saldo de la tarjeta
-            saldoActual -= montoPago;
+            currentBalance -= paymentAmount;
 
             // Verificar si el saldo después del pago sigue siendo menor o igual al límite
-            if (saldoActual <= creditCardModel.getCurrent_limit()) {
+            if (currentBalance <= creditCardModel.getCurrent_limit()) {
                 // Crear un registro en el historial
                 RecordModel recordModel = RecordModel.builder()
-                        .date(java.sql.Date.valueOf(fechaPago))
+                        .date(java.sql.Date.valueOf(payDay))
                         .creditCard(creditCardModel)
                         .build();
                 record.create(recordModel);
-                logAction(EnumOperations.PAY.getOperationsName() + saldoActual);
+                logAction(EnumOperations.PAY.getOperationsName() + currentBalance);
 
                 // Actualizar el saldo de la tarjeta
-                creditCardModel.setCurrent_limit(saldoActual);
+                creditCardModel.setCurrent_limit(currentBalance);
                 creditCardModule.update(creditCardModel);
                 commitTransaction();
 
-                Dialog.getInformation("Pago programado para el " + fechaPago + " por un monto de " + montoPago);
+                Dialog.getInformation("Payment scheduled for " + payDay + " by a sum of " + paymentAmount);
             } else {
-                Dialog.error("El pago automático excede el límite de crédito. Saldo insuficiente.");
+                Dialog.error("Automatic payment exceeds credit limit. Insufficient balance.");
             }
         } else {
-            Dialog.error("Saldo insuficiente para programar el pago automático.");
+            Dialog.error("Insufficient balance to schedule automatic payment.");
         }
     }
 
