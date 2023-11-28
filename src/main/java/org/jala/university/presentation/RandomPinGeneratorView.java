@@ -37,7 +37,6 @@ public class RandomPinGeneratorView extends JFrame {
                 int pin = CreditCardUtilities.generateRandomPIN();
                 pinLabel.setText("Pin Aleatory: " + pin);
                 creditCardModel.setNIP(pin);
-                controllerRecordCard.updatePin(pin);
 
             }
         });
