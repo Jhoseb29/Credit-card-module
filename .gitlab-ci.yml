@@ -19,7 +19,6 @@ stages:
   - deploy
 
 variables:
-  VERSION: "1.1.1"
   # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
   MAVEN_OPTS: >-
     -Dhttps.protocols=TLSv1.2
@@ -130,6 +129,6 @@ deploy:jdk17:
     - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml'
   only:
     variables:
-      - release/version-1.1.1
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 
